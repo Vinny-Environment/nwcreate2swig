@@ -1,12 +1,14 @@
 #pragma once
-#define DLLExport __declspec(dllexport)
+
+#define CLASS_DECLSPEC __declspec(dllexport)
 
 #include "string"
 #include "nwcreate/LiNwcAll.h"
+//class LcNwcData;
 
 /**@brief A wrapper class around LcNwcData API
 */
-class DLLExport LcNwcDataWrapper {
+class CLASS_DECLSPEC LcNwcDataWrapper {
 public:
 	LcNwcDataWrapper();
 	void SetFloat(double value);

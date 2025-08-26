@@ -1,5 +1,4 @@
-#include "pch.h"
-#include "NwcreateApi.hpp"
+#include "nwcreateApi.hpp"
 
 /*
 #define LI_NWC_NO_PROGRESS_CALLBACKS NULL

@@ -12,11 +12,11 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(NWCREATE_LIB)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NWCREATE_LIB)\include\;$(SWIG_LIB)\Lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(NWCREATE_LIB)\lib\x64;%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
-	  <AdditionalDependencies>nwcreate_22.lib</AdditionalDependencies>
+	  <AdditionalDependencies>nwcreate_22.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />

@@ -21,14 +21,11 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NwcreateApi.hpp">
+    <ClInclude Include="nwcreateApi.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,9 +35,12 @@
     <ClCompile Include="LcNwcDataWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="nwcreateApi_wrap.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="NwcCreateApi.i">
+    <CustomBuild Include="nwcreateApi.i">
       <Filter>Source Files</Filter>
     </CustomBuild>
   </ItemGroup>
