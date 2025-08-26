@@ -85,10 +85,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Headers.hpp" />
     <ClInclude Include="nwcreateApi.hpp" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LcNwcAttributeWrapper.cpp" />
     <ClCompile Include="LcNwcDataWrapper.cpp" />
     <ClCompile Include="NwcreateApi.cpp" />
     <ClCompile Include="nwcreateApi_wrap.cxx" />

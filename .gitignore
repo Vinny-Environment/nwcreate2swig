@@ -263,5 +263,5 @@ __pycache__/
 #IcoFX project files
 *.ifx
 
-nwcreateWrapper/external
-nwcreateWrapper/out
+src/nwcreateWrapperLib/nwcreateApi_wrap.cxx
+src/nwcreateNET/*.cs

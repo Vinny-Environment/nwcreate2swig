@@ -2,14 +2,16 @@
 
 #define CLASS_DECLSPEC __declspec(dllexport)
 
-#include "string"
-#include "nwcreate/LiNwcAll.h"
+class LcNwcPropertyAttributeWrapper;
+
+#include "Headers.hpp"
 //class LcNwcData;
 
 /**@brief A wrapper class around LcNwcData API
 */
 class CLASS_DECLSPEC LcNwcDataWrapper {
 public:
+	friend class LcNwcPropertyAttributeWrapper;
 	LcNwcDataWrapper();
 	void SetFloat(double value);
 	void SetLinearFloat(double value);
@@ -30,6 +32,47 @@ private:
 	LcNwcData mData;
 };
 
+class CLASS_DECLSPEC LcNwcAttributeWrapper {
+public:
+	void SetName(const std::wstring& name);
+	void SetClassName(const std::wstring& user_name, const std::string& internal_name);
+	void SetInternal(bool value);
+protected:
+	LcNwcAttributeWrapper(LtNwcAttribute handle);
+	LcNwcAttributeWrapper(const LcNwcAttribute& other);
+private:
+	LcNwcAttribute* mAttribute;
+};
+
+class CLASS_DECLSPEC LcNwcPropertyAttributeWrapper : protected LcNwcAttributeWrapper
+{
+public:
+	LcNwcPropertyAttributeWrapper();
+	void AddProperty(const std::wstring& user_name, const std::string& internal_name, LcNwcDataWrapper propertyInfo);
+	int Size() const;
+protected:
+	LcNwcPropertyAttributeWrapper(LtNwcPropertyAttribute handle);
+private:
+	LcNwcPropertyAttribute* mPropertyAttribute;
+};
+
+/*
+class CLASS_DECLSPEC LcNwcNodeWrapper   {
+protected:
+	LcNwcNodeWrapper(LtNwcGeometry handle);
+public:
+	void SetName(const std::wstring& name);
+	//void SetGuid(LtNwcGuidWrapper guid);
+	void SetClassName(const std::wstring& user_name, const std::string& internal_name);
+	void SetHidden(bool b);
+	void SetRequired(bool b);
+	void SetTwoSided(bool b);
+	void AddAttribute(LtNwcAttribute attrib);
+	void SetEnableAutoMerge(bool b);
+private:
+	LcNwcNode mNode;
+};
+*/
 /*
 class NwcPropertyAttribute {
 public:
