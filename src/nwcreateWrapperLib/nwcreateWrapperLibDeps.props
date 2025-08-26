@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+  </ImportGroup>
+  <PropertyGroup>
+    <NWCREATE_LIB>D:\PROCESSING\SDK\navis_api_2025\nwcreate</NWCREATE_LIB>
+	<SWIG_LIB>D:\PROCESSING\SDK\swigwin-4.3.1</SWIG_LIB>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_PropertySheetDisplayName>nwcreateWrapperLibDeps</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(NWCREATE_LIB)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(NWCREATE_LIB)\lib\x64;%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
+	  <AdditionalDependencies>nwcreate_22.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
