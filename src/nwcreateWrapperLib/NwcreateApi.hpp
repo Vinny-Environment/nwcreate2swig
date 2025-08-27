@@ -49,7 +49,7 @@ public:
 protected:
 	friend class LcNwcNodeWrapper;
 	friend class LcNwcPropertyAttributeWrapper;
-	LcNwcAttributeWrapper(LtNwcAttribute handle);
+	LcNwcAttributeWrapper(const LtNwcAttribute& handle);
 	LcNwcAttributeWrapper(const LcNwcAttribute& other);
 private:
 	LcNwcAttribute* mAttribute;
@@ -65,7 +65,7 @@ public:
 	int Size() const;
 	~LcNwcPropertyAttributeWrapper();
 protected:
-	LcNwcPropertyAttributeWrapper(LtNwcPropertyAttribute handle);
+	LcNwcPropertyAttributeWrapper(const LtNwcPropertyAttribute& handle);
 private:
 	LcNwcPropertyAttribute* mPropertyAttribute;
 };
@@ -106,8 +106,8 @@ public:
 	void SetCollection(bool b);
 	void AddNode(const LcNwcNodeWrapper& node);
 	~LcNwcGroupWrapper();
-protected:
-	LcNwcGroupWrapper(LtNwcGroup handle);
+//protected:
+//	LcNwcGroupWrapper(const LtNwcGroup& handle);
 private:
 	LcNwcGroup* mGroup;
 };

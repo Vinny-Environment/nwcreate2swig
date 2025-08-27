@@ -3,13 +3,17 @@
 //-----------------------------------------------------------------------------------------------------------------------
 // LcNwcNodeWrapper
 //-----------------------------------------------------------------------------------------------------------------------
+//LcNwcNodeWrapper::LcNwcNodeWrapper(){}
+
 LcNwcNodeWrapper::LcNwcNodeWrapper(LtNwcNode handle)
 {
+	LiNwcApiInitialise();
 	this->mNode = new LcNwcNode(handle);
 }
 
 LcNwcNodeWrapper::LcNwcNodeWrapper(const LcNwcNode& other)
 {
+	LiNwcApiInitialise();
 	this->mNode = new LcNwcNode(other);
 }
 
@@ -56,15 +60,17 @@ LcNwcNodeWrapper::~LcNwcNodeWrapper()
 //-----------------------------------------------------------------------------------------------------------------------
 // LcNwcGroupWrapper
 //-----------------------------------------------------------------------------------------------------------------------
-LcNwcGroupWrapper::LcNwcGroupWrapper() : LcNwcNodeWrapper(*this->mGroup)
+LcNwcGroupWrapper::LcNwcGroupWrapper() : 
+	LcNwcNodeWrapper(*(this->mGroup = new LcNwcGroup()))
 {
-	this->mGroup = new LcNwcGroup();
+
 }
 
-LcNwcGroupWrapper::LcNwcGroupWrapper(LtNwcGroup handle) : LcNwcNodeWrapper(*this->mGroup)
+/*
+LcNwcGroupWrapper::LcNwcGroupWrapper(const LtNwcGroup& handle) : LcNwcNodeWrapper(this->mGroup->GetHandle())
 {
-	this->mGroup = new LcNwcGroup(handle);
 }
+*/
 
 void LcNwcGroupWrapper::SetInsert(bool b)
 {

@@ -1,4 +1,4 @@
-%module nwcreateNET
+%module nwcreateWrapperLib
 
 %{
 #include "NwcreateApi.hpp"
@@ -51,7 +51,7 @@ public:
     void SetInternal(bool value);
     ~LcNwcAttributeWrapper();
 protected:
-    LcNwcAttributeWrapper(LtNwcAttribute handle);
+    LcNwcAttributeWrapper(const LtNwcAttribute& handle);
 	LcNwcAttributeWrapper(const LcNwcAttribute& other);
 };
 
@@ -63,7 +63,7 @@ public:
     int Size() const;
     ~LcNwcPropertyAttributeWrapper();
 protected:
-	LcNwcPropertyAttributeWrapper(LtNwcPropertyAttribute handle);
+	LcNwcPropertyAttributeWrapper(const LtNwcPropertyAttribute& handle);
 };
 
 %rename(LcNwcNodeWrapper) LcNwcNodeWrapper;
@@ -92,8 +92,6 @@ public:
     void SetCollection(bool b);
     void AddNode(const LcNwcNodeWrapper& node);
     ~LcNwcGroupWrapper();
-protected:
-	LcNwcGroupWrapper(LtNwcGroup handle);
 };
 
 %rename(LcNwcSceneWrapper) LcNwcSceneWrapper;

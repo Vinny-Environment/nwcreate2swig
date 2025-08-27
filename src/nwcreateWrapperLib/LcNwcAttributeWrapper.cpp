@@ -4,7 +4,7 @@
 // LcNwcAttributeWrapper
 //-----------------------------------------------------------------------------------------------------------------------
 
-LcNwcAttributeWrapper::LcNwcAttributeWrapper(LtNwcAttribute handle)
+LcNwcAttributeWrapper::LcNwcAttributeWrapper(const LtNwcAttribute& handle)
 {
 	mAttribute = new LcNwcAttribute(handle);
 }
@@ -42,7 +42,7 @@ LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper() : LcNwcAttributeW
 	mPropertyAttribute = new LcNwcPropertyAttribute();
 }
 
-LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper(LtNwcPropertyAttribute handle) : LcNwcAttributeWrapper(*this->mPropertyAttribute)
+LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper(const LtNwcPropertyAttribute& handle) : LcNwcAttributeWrapper(*this->mPropertyAttribute)
 {
 	mPropertyAttribute = new LcNwcPropertyAttribute(handle);
 }

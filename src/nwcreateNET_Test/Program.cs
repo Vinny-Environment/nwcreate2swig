@@ -10,7 +10,7 @@ namespace nwcreateNET_Test
             group.SetLayer(true);
             group.SetName("test");
             scene.AddNode(group);
-            scene.WriteCache("", @"C:\Users\Georg\Documents\GitHub\VinnyLibBin\Debug\dependencies\nwcreate\test.nwc");
+            scene.WriteCache("", @"E:\Temp\nwc\test.nwc");
             Console.WriteLine("\nEnd!");
         }
     }
