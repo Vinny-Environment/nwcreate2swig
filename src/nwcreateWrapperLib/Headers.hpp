@@ -7,7 +7,7 @@
 #include "nwcreate/LiNwcAll.h"
 
 #ifdef _EXPORTING
-#define CLASS_DECLSPEC __declspec(dllexport)
+#define NWCREATE_SWIG_API __declspec(dllexport)
 #else
-#define CLASS_DECLSPEC __declspec(dllimport)
+#define NWCREATE_SWIG_API __declspec(dllimport)
 #endif

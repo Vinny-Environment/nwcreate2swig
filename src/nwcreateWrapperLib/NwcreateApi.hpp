@@ -1,6 +1,6 @@
 #pragma once
 
-//#define CLASS_DECLSPEC __declspec(dllexport)
+//#define NWCREATE_SWIG_API __declspec(dllexport)
 
 class LcNwcDataWrapper;
 class LcNwcAttributeWrapper;
@@ -14,9 +14,8 @@ class LcNwcSceneWrapper;
 
 /**@brief A wrapper class around LcNwcData API
 */
-class CLASS_DECLSPEC LcNwcDataWrapper {
+class NWCREATE_SWIG_API LcNwcDataWrapper {
 public:
-	
 	LcNwcDataWrapper();
 	void SetFloat(double value);
 	void SetLinearFloat(double value);
@@ -40,7 +39,7 @@ private:
 
 /**@brief A wrapper class around LcNwcAttribute API
 */
-class CLASS_DECLSPEC LcNwcAttributeWrapper {
+class NWCREATE_SWIG_API LcNwcAttributeWrapper {
 public:
 	void SetName(const std::wstring& name);
 	void SetClassName(const std::wstring& user_name, const std::string& internal_name);
@@ -57,7 +56,7 @@ private:
 
 /**@brief A wrapper class around LcNwcPropertyAttribute API
 */
-class CLASS_DECLSPEC LcNwcPropertyAttributeWrapper : public LcNwcAttributeWrapper
+class NWCREATE_SWIG_API LcNwcPropertyAttributeWrapper : public LcNwcAttributeWrapper
 {
 public:
 	LcNwcPropertyAttributeWrapper();
@@ -73,7 +72,7 @@ private:
 
 /**@brief A wrapper class around LcNwcNode API
 */
-class CLASS_DECLSPEC LcNwcNodeWrapper
+class NWCREATE_SWIG_API LcNwcNodeWrapper
 {
 protected:
 	friend class LcNwcGroupWrapper;
@@ -96,7 +95,7 @@ private:
 
 /**@brief A wrapper class around LcNwcGroup API
 */
-class CLASS_DECLSPEC LcNwcGroupWrapper : public LcNwcNodeWrapper
+class NWCREATE_SWIG_API LcNwcGroupWrapper : public LcNwcNodeWrapper
 {	
 public:
 	LcNwcGroupWrapper();
@@ -114,7 +113,7 @@ private:
 
 /**@brief A wrapper class around LcNwcScene API
 */
-class CLASS_DECLSPEC LcNwcSceneWrapper
+class NWCREATE_SWIG_API LcNwcSceneWrapper
 {
 public:
 	LcNwcSceneWrapper();
