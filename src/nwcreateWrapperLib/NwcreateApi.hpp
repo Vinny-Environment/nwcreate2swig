@@ -14,7 +14,7 @@ class LcNwcSceneWrapper;
 
 /**@brief A wrapper class around LcNwcData API
 */
-class PROJECTAPI LcNwcDataWrapper {
+class CLASS_DECLSPEC LcNwcDataWrapper {
 public:
 	
 	LcNwcDataWrapper();
@@ -40,7 +40,7 @@ private:
 
 /**@brief A wrapper class around LcNwcAttribute API
 */
-class PROJECTAPI LcNwcAttributeWrapper {
+class CLASS_DECLSPEC LcNwcAttributeWrapper {
 public:
 	void SetName(const std::wstring& name);
 	void SetClassName(const std::wstring& user_name, const std::string& internal_name);
@@ -57,7 +57,7 @@ private:
 
 /**@brief A wrapper class around LcNwcPropertyAttribute API
 */
-class PROJECTAPI LcNwcPropertyAttributeWrapper : public LcNwcAttributeWrapper
+class CLASS_DECLSPEC LcNwcPropertyAttributeWrapper : public LcNwcAttributeWrapper
 {
 public:
 	LcNwcPropertyAttributeWrapper();
@@ -73,7 +73,7 @@ private:
 
 /**@brief A wrapper class around LcNwcNode API
 */
-class PROJECTAPI LcNwcNodeWrapper
+class CLASS_DECLSPEC LcNwcNodeWrapper
 {
 protected:
 	friend class LcNwcGroupWrapper;
@@ -96,7 +96,7 @@ private:
 
 /**@brief A wrapper class around LcNwcGroup API
 */
-class PROJECTAPI LcNwcGroupWrapper : public LcNwcNodeWrapper
+class CLASS_DECLSPEC LcNwcGroupWrapper : public LcNwcNodeWrapper
 {	
 public:
 	LcNwcGroupWrapper();
@@ -114,7 +114,7 @@ private:
 
 /**@brief A wrapper class around LcNwcScene API
 */
-class PROJECTAPI LcNwcSceneWrapper
+class CLASS_DECLSPEC LcNwcSceneWrapper
 {
 public:
 	LcNwcSceneWrapper();

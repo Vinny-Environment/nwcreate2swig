@@ -7,6 +7,7 @@
 %include <std_string.i>
 %include <std_wstring.i>
 %include <windows.i>
+%include <exception.i>
 
 // Enable wide string support
 %include "std_wstring.i"
@@ -104,18 +105,40 @@ public:
     ~LcNwcSceneWrapper();
 };
 
-// Typemaps for wide strings
+// Additional typemaps for better language integration
+%typemap(out) std::wstring {
+    // Convert std::wstring to target language string
+    $result = SWIG_FromWChar($1.c_str());
+}
+
 %typemap(in) const std::wstring& (std::wstring temp) {
-    // Convert from target language string to std::wstring
-    // This will need to be customized based on the target language
-    temp = ...; // Conversion logic here
+    // Convert target language string to std::wstring
+    wchar_t* ptr = NULL;
+    int res = SWIG_AsWCharPtrAndSize($input, &ptr, NULL, 0);
+    if (!SWIG_IsOK(res)) {
+        SWIG_exception_fail(SWIG_TypeError, "expected wide string");
+    }
+    temp = ptr;
     $1 = &temp;
 }
 
-%typemap(out) std::wstring {
-    // Convert std::wstring to target language string
-    // This will need to be customized based on the target language
-    $result = ...; // Conversion logic here
+%typemap(in) long long {
+    // Handle 64-bit integers
+    $1 = (long long)SWIG_AsVal_long_long($input);
+}
+
+%typemap(out) long long {
+    // Return 64-bit integers
+    $result = SWIG_From_long_long($1);
+}
+
+// Exception handling
+%exception {
+    try {
+        $action
+    } catch (const std::exception& e) {
+        SWIG_exception(SWIG_RuntimeError, e.what());
+    }
 }
 
 // Handle the friend relationships by making protected members accessible

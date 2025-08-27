@@ -8,6 +8,7 @@
 //-----------------------------------------------------------------------------------------------------------------------
 LcNwcSceneWrapper::LcNwcSceneWrapper()
 {
+	LiNwcApiInitialise();
 	this->mScene = new LcNwcScene();
 }
 
