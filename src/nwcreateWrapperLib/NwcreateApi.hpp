@@ -1,17 +1,22 @@
 #pragma once
 
-#define CLASS_DECLSPEC __declspec(dllexport)
+//#define CLASS_DECLSPEC __declspec(dllexport)
 
+class LcNwcDataWrapper;
+class LcNwcAttributeWrapper;
 class LcNwcPropertyAttributeWrapper;
+class LcNwcNodeWrapper;
+class LcNwcGroupWrapper;
+class LcNwcSceneWrapper;
 
 #include "Headers.hpp"
 //class LcNwcData;
 
 /**@brief A wrapper class around LcNwcData API
 */
-class CLASS_DECLSPEC LcNwcDataWrapper {
+class PROJECTAPI LcNwcDataWrapper {
 public:
-	friend class LcNwcPropertyAttributeWrapper;
+	
 	LcNwcDataWrapper();
 	void SetFloat(double value);
 	void SetLinearFloat(double value);
@@ -26,40 +31,55 @@ public:
 	void SetName(const std::wstring& user_name, const std::string& internal_name);
 	void SetNameEnum(const std::wstring& user_name, const std::string& internal_name, int value);
 	void SetPoint3D(double x, double y, double z);
-
 	~LcNwcDataWrapper();
+protected:
+	friend class LcNwcPropertyAttributeWrapper;
 private:
-	LcNwcData mData;
+	LcNwcData* mData;
 };
 
-class CLASS_DECLSPEC LcNwcAttributeWrapper {
+/**@brief A wrapper class around LcNwcAttribute API
+*/
+class PROJECTAPI LcNwcAttributeWrapper {
 public:
 	void SetName(const std::wstring& name);
 	void SetClassName(const std::wstring& user_name, const std::string& internal_name);
 	void SetInternal(bool value);
+	~LcNwcAttributeWrapper();
 protected:
+	friend class LcNwcNodeWrapper;
+	friend class LcNwcPropertyAttributeWrapper;
 	LcNwcAttributeWrapper(LtNwcAttribute handle);
 	LcNwcAttributeWrapper(const LcNwcAttribute& other);
 private:
 	LcNwcAttribute* mAttribute;
 };
 
-class CLASS_DECLSPEC LcNwcPropertyAttributeWrapper : protected LcNwcAttributeWrapper
+/**@brief A wrapper class around LcNwcPropertyAttribute API
+*/
+class PROJECTAPI LcNwcPropertyAttributeWrapper : public LcNwcAttributeWrapper
 {
 public:
 	LcNwcPropertyAttributeWrapper();
-	void AddProperty(const std::wstring& user_name, const std::string& internal_name, LcNwcDataWrapper propertyInfo);
+	void AddProperty(const std::wstring& user_name, const std::string& internal_name, const LcNwcDataWrapper& propertyInfo);
 	int Size() const;
+	~LcNwcPropertyAttributeWrapper();
 protected:
 	LcNwcPropertyAttributeWrapper(LtNwcPropertyAttribute handle);
 private:
 	LcNwcPropertyAttribute* mPropertyAttribute;
 };
 
-/*
-class CLASS_DECLSPEC LcNwcNodeWrapper   {
+
+/**@brief A wrapper class around LcNwcNode API
+*/
+class PROJECTAPI LcNwcNodeWrapper
+{
 protected:
-	LcNwcNodeWrapper(LtNwcGeometry handle);
+	friend class LcNwcGroupWrapper;
+	friend class LcNwcSceneWrapper;
+	LcNwcNodeWrapper(LtNwcNode handle);
+	LcNwcNodeWrapper(const LcNwcNode& other);
 public:
 	void SetName(const std::wstring& name);
 	//void SetGuid(LtNwcGuidWrapper guid);
@@ -67,52 +87,40 @@ public:
 	void SetHidden(bool b);
 	void SetRequired(bool b);
 	void SetTwoSided(bool b);
-	void AddAttribute(LtNwcAttribute attrib);
+	void AddAttribute(const LcNwcAttributeWrapper& attrib);
 	void SetEnableAutoMerge(bool b);
+	~LcNwcNodeWrapper();
 private:
-	LcNwcNode mNode;
+	LcNwcNode* mNode;
 };
+
+/**@brief A wrapper class around LcNwcGroup API
 */
-/*
-class NwcPropertyAttribute {
+class PROJECTAPI LcNwcGroupWrapper : public LcNwcNodeWrapper
+{	
 public:
-	friend class NwcGroupWrapper;
-
-	NwcPropertyAttribute();
-	void SetName(const std::wstring& name);
-	void SetClassName(const std::wstring& userName, const std::wstring& internalName);
-	void SetInternal(bool value);
-	void AddProperty(const std::wstring& user_name, const std::wstring& internal_name, LtNwcData property)
-private:
-	LcNwcPropertyAttribute mPropertyAttribute;
-};
-
-class NwcGroupWrapper {
-public:
-	NwcGroupWrapper();
-	void SetName(const std::wstring& name);
-	
-	void AddAttribute(const NwcPropertyAttribute& attribute);
-
+	LcNwcGroupWrapper();
 	void SetInsert(bool b);
 	void SetLayer(bool b);
 	void SetComposite(bool b);
 	void SetCollection(bool b);
-	void AddNode();
+	void AddNode(const LcNwcNodeWrapper& node);
+	~LcNwcGroupWrapper();
+protected:
+	LcNwcGroupWrapper(LtNwcGroup handle);
 private:
-	LcNwcGroup mGroup;
+	LcNwcGroup* mGroup;
 };
-class NwcreateApi
+
+/**@brief A wrapper class around LcNwcScene API
+*/
+class PROJECTAPI LcNwcSceneWrapper
 {
 public:
-	NwcreateApi();
-
-	void SaveProject(const std::wstring& savePath);
-
+	LcNwcSceneWrapper();
+	void AddNode(const LcNwcNodeWrapper& node);
+	void WriteCache(const std::wstring& orig_filename, const std::wstring& filename);
+	~LcNwcSceneWrapper();
 private:
-	LcNwcScene mScene;
+	LcNwcScene* mScene;
 };
-
-*/
-
-// endif

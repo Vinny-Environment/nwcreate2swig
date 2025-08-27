@@ -49,7 +49,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;SRC_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;SRC_EXPORTS;EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -59,6 +59,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(TargetDir)" "$(SolutionDir)..\VinnyLibBin\$(Configuration)\dependencies\nwcreate" /Y /I
+xcopy "$(NWCREATE_LIB)\bin\x64\*.*" "$(SolutionDir)..\VinnyLibBin\$(Configuration)\dependencies\nwcreate" /Y /I /E
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -82,6 +87,11 @@
       </AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(TargetDir)" "$(SolutionDir)..\VinnyLibBin\$(Configuration)\dependencies\nwcreate" /Y /I
+xcopy "$(NWCREATE_LIB)\bin\x64\*.*" "$(SolutionDir)..\VinnyLibBin\$(Configuration)\dependencies\nwcreate" /Y /I /E
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -92,6 +102,8 @@
   <ItemGroup>
     <ClCompile Include="LcNwcAttributeWrapper.cpp" />
     <ClCompile Include="LcNwcDataWrapper.cpp" />
+    <ClCompile Include="LcNwcNodeWrapper.cpp" />
+    <ClCompile Include="LcNwcSceneWrapper.cpp" />
     <ClCompile Include="NwcreateApi.cpp" />
     <ClCompile Include="nwcreateApi_wrap.cxx" />
     <ClCompile Include="pch.cpp">
@@ -102,11 +114,10 @@
   <ItemGroup>
     <CustomBuild Include="nwcreateApi.i">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-$(SWIG_LIB)\swig.exe -csharp -c++ -outdir $(SolutionDir)src\nwcreateNET $(ProjectDir)nwcreateApi.i</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SWIG_LIB)\swig.exe -csharp -c++ -outdir $(ProjectDir) NwcCreateApi.i</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SWIG_LIB)\swig.exe -csharp -c++ -outdir $(SolutionDir)src\nwcreateNET $(ProjectDir)nwcreateApi.i</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SWIG_LIB)\swig.exe -csharp -c++ -outdir $(SolutionDir)src\nwcreateNET $(ProjectDir)nwcreateApi.i</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">nwcreateApi_wrap.cxx;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">nwcreateWrapperLib_wrap.cxx;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">nwcreateApi_wrap.cxx;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

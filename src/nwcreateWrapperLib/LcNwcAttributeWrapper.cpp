@@ -29,25 +29,35 @@ void LcNwcAttributeWrapper::SetInternal(bool value)
 	mAttribute->SetInternal(value);
 }
 
+LcNwcAttributeWrapper::~LcNwcAttributeWrapper() 
+{
+	LiNwcAttributeDestroy(*mAttribute);
+}
+
 //-----------------------------------------------------------------------------------------------------------------------
 // LcNwcPropertyAttributeWrapper
 //-----------------------------------------------------------------------------------------------------------------------
-LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper() : LcNwcAttributeWrapper(LiNwcPropertyAttributeCreate())
+LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper() : LcNwcAttributeWrapper(*this->mPropertyAttribute)
 {
 	mPropertyAttribute = new LcNwcPropertyAttribute();
 }
 
-LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper(LtNwcPropertyAttribute handle) : LcNwcAttributeWrapper(handle)
+LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper(LtNwcPropertyAttribute handle) : LcNwcAttributeWrapper(*this->mPropertyAttribute)
 {
 	mPropertyAttribute = new LcNwcPropertyAttribute(handle);
 }
 
-void LcNwcPropertyAttributeWrapper::AddProperty(const std::wstring& user_name, const std::string& internal_name, LcNwcDataWrapper propertyInfo)
+void LcNwcPropertyAttributeWrapper::AddProperty(const std::wstring& user_name, const std::string& internal_name, const LcNwcDataWrapper& propertyInfo)
 {
-	mPropertyAttribute->AddProperty(user_name.c_str(), internal_name.c_str(), propertyInfo.mData);
+	mPropertyAttribute->AddProperty(user_name.c_str(), internal_name.c_str(), *propertyInfo.mData);
 }
 
 int LcNwcPropertyAttributeWrapper::Size() const
 {
 	return mPropertyAttribute->Size();
+}
+
+LcNwcPropertyAttributeWrapper::~LcNwcPropertyAttributeWrapper()
+{
+	LiNwcPropertyAttributeDestroy(*mPropertyAttribute);
 }

@@ -1,98 +1,127 @@
-/* NwcreateApi.i - SWIG interface file for NwcreateApi classes */
-
-%module nwcreate
+%module nwcreateNET
 
 %{
 #include "NwcreateApi.hpp"
-#include "Headers.hpp"
 %}
 
-%include <windows.i>
 %include <std_string.i>
 %include <std_wstring.i>
-%include <stdint.i>
-%include <exception.i>
+%include <windows.i>
+
+// Enable wide string support
+%include "std_wstring.i"
 
 // Handle the CLASS_DECLSPEC macro
 //#define CLASS_DECLSPEC
 
 // Forward declarations
-class LcNwcData;
-class LtNwcAttribute;
-class LcNwcAttribute;
-class LtNwcPropertyAttribute;
-class LcNwcPropertyAttribute;
-class LtNwcGeometry;
+class LcNwcDataWrapper;
+class LcNwcAttributeWrapper;
+class LcNwcPropertyAttributeWrapper;
+class LcNwcNodeWrapper;
+class LcNwcGroupWrapper;
+class LcNwcSceneWrapper;
 
-// Ignore the private implementation details
-%ignore LcNwcDataWrapper::mData;
-%ignore LcNwcAttributeWrapper::mAttribute;
-%ignore LcNwcPropertyAttributeWrapper::mPropertyAttribute;
+%rename(LcNwcDataWrapper) LcNwcDataWrapper;
+class LcNwcDataWrapper {
+public:
+    LcNwcDataWrapper();
+    void SetFloat(double value);
+    void SetLinearFloat(double value);
+    void SetAreaFloat(double value);
+    void SetVolumeFloat(double value);
+    void SetAngularFloat(double value);
+    void SetBoolean(bool value);
+    void SetInt32(int value);
+    void SetInt64(long long value);
+    void SetWideString(const std::wstring& value);
+    void SetTime(long long value);
+    void SetName(const std::wstring& user_name, const std::string& internal_name);
+    void SetNameEnum(const std::wstring& user_name, const std::string& internal_name, int value);
+    void SetPoint3D(double x, double y, double z);
+    ~LcNwcDataWrapper();
+};
 
-// Include the main header
-%include "NwcreateApi.hpp"
+%rename(LcNwcAttributeWrapper) LcNwcAttributeWrapper;
+class LcNwcAttributeWrapper {
+public:
+    void SetName(const std::wstring& name);
+    void SetClassName(const std::wstring& user_name, const std::string& internal_name);
+    void SetInternal(bool value);
+    ~LcNwcAttributeWrapper();
+protected:
+    LcNwcAttributeWrapper(LtNwcAttribute handle);
+	LcNwcAttributeWrapper(const LcNwcAttribute& other);
+};
 
-// Additional typemaps for better language integration
-%typemap(out) std::wstring {
-    // Convert std::wstring to target language string
-    $result = SWIG_FromWChar($1.c_str());
-}
+%rename(LcNwcPropertyAttributeWrapper) LcNwcPropertyAttributeWrapper;
+class LcNwcPropertyAttributeWrapper : public LcNwcAttributeWrapper {
+public:
+    LcNwcPropertyAttributeWrapper();
+    void AddProperty(const std::wstring& user_name, const std::string& internal_name, LcNwcDataWrapper propertyInfo);
+    int Size() const;
+    ~LcNwcPropertyAttributeWrapper();
+protected:
+	LcNwcPropertyAttributeWrapper(LtNwcPropertyAttribute handle);
+};
 
+%rename(LcNwcNodeWrapper) LcNwcNodeWrapper;
+class LcNwcNodeWrapper {
+public:
+    void SetName(const std::wstring& name);
+    void SetClassName(const std::wstring& user_name, const std::string& internal_name);
+    void SetHidden(bool b);
+    void SetRequired(bool b);
+    void SetTwoSided(bool b);
+    void AddAttribute(const LcNwcAttributeWrapper& attrib);
+    void SetEnableAutoMerge(bool b);
+    ~LcNwcNodeWrapper();
+protected:
+	LcNwcNodeWrapper(LtNwcNode handle);
+	LcNwcNodeWrapper(const LcNwcNode& other);
+};
+
+%rename(LcNwcGroupWrapper) LcNwcGroupWrapper;
+class LcNwcGroupWrapper : public LcNwcNodeWrapper {
+public:
+    LcNwcGroupWrapper();
+    void SetInsert(bool b);
+    void SetLayer(bool b);
+    void SetComposite(bool b);
+    void SetCollection(bool b);
+    void AddNode(const LcNwcNodeWrapper& node);
+    ~LcNwcGroupWrapper();
+protected:
+	LcNwcGroupWrapper(LtNwcGroup handle);
+};
+
+%rename(LcNwcSceneWrapper) LcNwcSceneWrapper;
+class LcNwcSceneWrapper {
+public:
+    LcNwcSceneWrapper();
+    void AddNode(const LcNwcNodeWrapper& node);
+    void WriteCache(const std::wstring& orig_filename, const std::wstring& filename);
+    ~LcNwcSceneWrapper();
+};
+
+// Typemaps for wide strings
 %typemap(in) const std::wstring& (std::wstring temp) {
-    // Convert target language string to std::wstring
-    wchar_t* ptr = NULL;
-    int res = SWIG_AsWCharPtrAndSize($input, &ptr, NULL, 0);
-    if (!SWIG_IsOK(res)) {
-        SWIG_exception_fail(SWIG_TypeError, "expected wide string");
-    }
-    temp = ptr;
+    // Convert from target language string to std::wstring
+    // This will need to be customized based on the target language
+    temp = ...; // Conversion logic here
     $1 = &temp;
 }
 
-%typemap(in) long long {
-    // Handle 64-bit integers
-    $1 = (long long)SWIG_AsVal_long_long($input);
+%typemap(out) std::wstring {
+    // Convert std::wstring to target language string
+    // This will need to be customized based on the target language
+    $result = ...; // Conversion logic here
 }
 
-%typemap(out) long long {
-    // Return 64-bit integers
-    $result = SWIG_From_long_long($1);
-}
-
-// Handle the LcNwcDataWrapper parameter in AddProperty
-%typemap(in) LcNwcDataWrapper (LcNwcDataWrapper temp) {
-    // Convert from target language object to LcNwcDataWrapper
-    void* argp = 0;
-    int res = SWIG_ConvertPtr($input, &argp, SWIGTYPE_p_LcNwcDataWrapper, 0);
-    if (!SWIG_IsOK(res)) {
-        SWIG_exception_fail(SWIG_ArgError(res), "expected LcNwcDataWrapper object");
-    }
-    temp = *reinterpret_cast<LcNwcDataWrapper*>(argp);
-    $1 = temp;
-}
-
-// Handle LtNwcAttribute parameter
-%typemap(in) LtNwcAttribute {
-    // You may need to adjust this based on the actual type definition
-    $1 = (LtNwcAttribute)SWIG_AsVal_long($input);
-}
-
-// Exception handling
-%exception {
-    try {
-        $action
-    } catch (const std::exception& e) {
-        SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-}
-
-// Additional directives for specific classes
-
-// For LcNwcAttributeWrapper - make protected constructors accessible
-%extend LcNwcAttributeWrapper {
-    // Create factory methods for protected constructors if needed
-    // These would need to be implemented in your C++ code
-}
-
-// For LcNwcPropertyAttributeWrapper - handle inheritance
-%feature("director") LcNwcPropertyAttributeWrapper;
+// Handle the friend relationships by making protected members accessible
+%ignore LcNwcDataWrapper::mData;
+%ignore LcNwcAttributeWrapper::mAttribute;
+%ignore LcNwcPropertyAttributeWrapper::mPropertyAttribute;
+%ignore LcNwcNodeWrapper::mNode;
+%ignore LcNwcGroupWrapper::mGroup;
+%ignore LcNwcSceneWrapper::mScene;
