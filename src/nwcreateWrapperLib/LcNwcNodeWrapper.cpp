@@ -22,6 +22,11 @@ void LcNwcNodeWrapper::SetName(const std::wstring& name)
 	this->mNode->SetName(name.c_str());
 }
 
+void LcNwcNodeWrapper::SetGuid(const LcNwcGuidWrapper& guid)
+{
+	this->mNode->SetGuid(*guid.mGuid);
+}
+
 void LcNwcNodeWrapper::SetClassName(const std::wstring& user_name, const std::string& internal_name)
 {
 	this->mNode->SetClassName(user_name.c_str(), internal_name.c_str());

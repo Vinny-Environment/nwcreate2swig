@@ -77,3 +77,16 @@ LcNwcDataWrapper::~LcNwcDataWrapper()
 {
 	LiNwcDataDestroy(*this->mData);
 }
+
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcDataWrapper
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcGuidWrapper::LcNwcGuidWrapper(const std::wstring& guid)
+{
+	this->mGuid = new LcNwcGuid(LiNwcGuidCreateFromGuidString(guid.c_str()));
+}
+
+LcNwcGuidWrapper::~LcNwcGuidWrapper()
+{
+	LiNwcGuidDestroy(*this->mGuid);
+}

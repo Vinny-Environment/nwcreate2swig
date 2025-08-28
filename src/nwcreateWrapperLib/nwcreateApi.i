@@ -17,8 +17,17 @@
 
 // Forward declarations
 class LcNwcDataWrapper;
+class LcNwcGuidWrapper;
+
 class LcNwcAttributeWrapper;
+class LcNwcTransformWrapper;
+class LcNwcMaterialWrapper;
+class LcNwcTextAttributeWrapper;
+class LcNwcNameAttributeWrapper;
 class LcNwcPropertyAttributeWrapper;
+class LcNwcURLAttributeWrapper;
+class LcNwcBinaryAttributeWrapper;
+
 class LcNwcNodeWrapper;
 class LcNwcGroupWrapper;
 class LcNwcSceneWrapper;
@@ -43,6 +52,13 @@ public:
     ~LcNwcDataWrapper();
 };
 
+%rename(LcNwcGuidWrapper) LcNwcGuidWrapper;
+class LcNwcGuidWrapper {
+public:
+	LcNwcGuidWrapper(const std::wstring& guid);
+	~LcNwcGuidWrapper();
+};
+
 %rename(LcNwcAttributeWrapper) LcNwcAttributeWrapper;
 class LcNwcAttributeWrapper {
 public:
@@ -55,6 +71,75 @@ protected:
 	LcNwcAttributeWrapper(const LcNwcAttribute& other);
 };
 
+%rename(LcNwcTransformWrapper) LcNwcTransformWrapper;
+class LcNwcTransformWrapper : public LcNwcAttributeWrapper {
+public:
+    LcNwcTransformWrapper(double x, double y, double z);
+	LcNwcTransformWrapper(double rX, double rY, double rZ, double rA, double tX, double tY, double tZ);
+	LcNwcTransformWrapper(double matrix[16], bool reverses);
+    ~LcNwcTransformWrapper();
+protected:
+	LcNwcTransformWrapper(const LtNwcTransform& handle);
+};
+
+%rename(LcNwcMaterialWrapper) LcNwcMaterialWrapper;
+class LcNwcMaterialWrapper : public LcNwcAttributeWrapper {
+public:
+    LcNwcMaterialWrapper();
+    void SetDiffuseColor(double r, double g, double b);
+	void SetAmbientColor(double r, double g, double b);
+	void SetSpecularColor(double r, double g, double b);
+	void SetEmissiveColor(double r, double g, double b);
+	void SetShininess(double t);
+	void SetTransparency(double t);
+    ~LcNwcMaterialWrapper();
+protected:
+	LcNwcMaterialWrapper(const LtNwcMaterial& handle);
+};
+
+%rename(LcNwcSemanticPriorityWrapper) LcNwcSemanticPriorityWrapper;
+class LcNwcSemanticPriorityWrapper : public LcNwcAttributeWrapper {
+public:
+	LcNwcSemanticPriorityWrapper();
+	void SetPriority(double priority);
+	~LcNwcSemanticPriorityWrapper();
+protected:
+	LcNwcSemanticPriorityWrapper(const LtNwcSemanticPriority& handle);
+};
+
+%rename(LcNwcTextAttributeWrapper) LcNwcTextAttributeWrapper;
+class LcNwcTextAttributeWrapper : public LcNwcAttributeWrapper {
+public:
+	LcNwcTextAttributeWrapper();
+	void SetText(const std::wstring& text);
+	~LcNwcTextAttributeWrapper();
+protected:
+	LcNwcTextAttributeWrapper(const LtNwcTextAttribute& handle);
+};
+
+%rename(LcNwcNameAttributeWrapper) LcNwcNameAttributeWrapper;
+class LcNwcNameAttributeWrapper : public LcNwcAttributeWrapper {
+public:
+	LcNwcNameAttributeWrapper();
+	void SetStableId(bool b);
+	~LcNwcNameAttributeWrapper();
+protected:
+	LcNwcNameAttributeWrapper(const LtNwcNameAttribute& handle);
+};
+
+%rename(LcNwcNat64AttributeWrapper) LcNwcNat64AttributeWrapper;
+class LcNwcNat64AttributeWrapper : public LcNwcAttributeWrapper {
+public:
+	LcNwcNat64AttributeWrapper();
+	void SetStableId(bool b);
+	void SetValue(double value);
+	void DisplayValueAsDecimal();
+	void DisplayValueAsHexaDecimal();
+	~LcNwcNat64AttributeWrapper();
+protected:
+	LcNwcNat64AttributeWrapper(const LtNwcNat64Attribute& handle);
+};
+
 %rename(LcNwcPropertyAttributeWrapper) LcNwcPropertyAttributeWrapper;
 class LcNwcPropertyAttributeWrapper : public LcNwcAttributeWrapper {
 public:
@@ -64,6 +149,18 @@ public:
     ~LcNwcPropertyAttributeWrapper();
 protected:
 	LcNwcPropertyAttributeWrapper(const LtNwcPropertyAttribute& handle);
+};
+
+%rename(LcNwcURLAttributeWrapper) LcNwcURLAttributeWrapper;
+class LcNwcURLAttributeWrapper : public LcNwcAttributeWrapper {
+public:
+	LcNwcURLAttributeWrapper();
+	void AddURL(const std::wstring& name, const std::wstring& url);
+	void AddURLEx(const std::wstring& name, const std::wstring& url, const std::wstring& category_user_name, const std::string& category_internal_name);
+	void AddAttachmentPoint(double x, double y, double z);
+	~LcNwcURLAttributeWrapper();
+protected:
+	LcNwcURLAttributeWrapper(const LtNwcURLAttribute& handle);
 };
 
 %rename(LcNwcNodeWrapper) LcNwcNodeWrapper;
@@ -141,8 +238,19 @@ public:
 
 // Handle the friend relationships by making protected members accessible
 %ignore LcNwcDataWrapper::mData;
+%ignore LcNwcGuidWrapper::mGuid;
+
 %ignore LcNwcAttributeWrapper::mAttribute;
+%ignore LcNwcTransform::mTransform;
+%ignore LcNwcMaterialWrapper::mMaterial;
+%ignore LcNwcSemanticPriorityWrapper::mSemanticPriority;
+%ignore LcNwcTextAttributeWrapper::mTextAttribute;
+%ignore LcNwcNameAttributeWrapper::mNameAttribute;
+%ignore LcNwcNat64AttributeWrapper::mNat64Attribute;
 %ignore LcNwcPropertyAttributeWrapper::mPropertyAttribute;
+%ignore LcNwcURLAttributeWrapper::mURLAttribute;
+%ignore LcNwcBinaryAttributeWrapper::mBinaryAttribute;
+
 %ignore LcNwcNodeWrapper::mNode;
 %ignore LcNwcGroupWrapper::mGroup;
 %ignore LcNwcSceneWrapper::mScene;
