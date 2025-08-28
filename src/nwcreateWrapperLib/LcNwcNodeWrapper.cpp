@@ -66,11 +66,12 @@ LcNwcGroupWrapper::LcNwcGroupWrapper() :
 
 }
 
-/*
-LcNwcGroupWrapper::LcNwcGroupWrapper(const LtNwcGroup& handle) : LcNwcNodeWrapper(this->mGroup->GetHandle())
+
+LcNwcGroupWrapper::LcNwcGroupWrapper(const LtNwcGroup& handle) : LcNwcNodeWrapper(*(this->mGroup = new LcNwcGroup(handle)))
 {
+
 }
-*/
+
 
 void LcNwcGroupWrapper::SetInsert(bool b)
 {

@@ -37,14 +37,14 @@ LcNwcAttributeWrapper::~LcNwcAttributeWrapper()
 //-----------------------------------------------------------------------------------------------------------------------
 // LcNwcPropertyAttributeWrapper
 //-----------------------------------------------------------------------------------------------------------------------
-LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper() : LcNwcAttributeWrapper(*this->mPropertyAttribute)
+LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper() : LcNwcAttributeWrapper(*(this->mPropertyAttribute = new LcNwcPropertyAttribute()))
 {
-	mPropertyAttribute = new LcNwcPropertyAttribute();
+
 }
 
-LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper(const LtNwcPropertyAttribute& handle) : LcNwcAttributeWrapper(*this->mPropertyAttribute)
+LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper(const LtNwcPropertyAttribute& handle) : LcNwcAttributeWrapper(*(this->mPropertyAttribute = new LcNwcPropertyAttribute(handle)))
 {
-	mPropertyAttribute = new LcNwcPropertyAttribute(handle);
+
 }
 
 void LcNwcPropertyAttributeWrapper::AddProperty(const std::wstring& user_name, const std::string& internal_name, const LcNwcDataWrapper& propertyInfo)

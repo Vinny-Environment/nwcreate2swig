@@ -105,8 +105,8 @@ public:
 	void SetCollection(bool b);
 	void AddNode(const LcNwcNodeWrapper& node);
 	~LcNwcGroupWrapper();
-//protected:
-//	LcNwcGroupWrapper(const LtNwcGroup& handle);
+protected:
+	LcNwcGroupWrapper(const LtNwcGroup& handle);
 private:
 	LcNwcGroup* mGroup;
 };
