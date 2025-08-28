@@ -85,6 +85,59 @@ LcNwcExternalGeometryWrapper::~LcNwcExternalGeometryWrapper()
 {
 	LiNwcExternalGeometryDestroy(*this->mExternalGeometry);
 }
+
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcTextStyleWrapper
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcTextStyleWrapper::LcNwcTextStyleWrapper(const std::wstring& typeface)
+{
+	this->mTextStyle = new LcNwcTextStyle(typeface.c_str());
+}
+
+LcNwcTextStyleWrapper::LcNwcTextStyleWrapper(const LcNwcTextStyleWrapper& other)
+{
+	this->mTextStyle = new LcNwcTextStyle(*other.mTextStyle);
+}
+
+LcNwcTextStyleWrapper::LcNwcTextStyleWrapper(LtNwcTextStyle handle)
+{
+	this->mTextStyle = new LcNwcTextStyle(handle);
+}
+
+void LcNwcTextStyleWrapper::SetTypeface(const std::wstring& typeface)
+{
+	this->mTextStyle->SetTypeface(typeface.c_str());
+}
+
+void LcNwcTextStyleWrapper::SetFontHeight(double height)
+{
+	this->mTextStyle->SetFontHeight(height);
+}
+
+void LcNwcTextStyleWrapper::SetPointSize(int point_size)
+{
+	this->mTextStyle->SetPointSize(point_size);
+}
+
+void LcNwcTextStyleWrapper::SetRenderStyle(LtNwcTextRenderStyleWrapper render_style)
+{
+	this->mTextStyle->SetRenderStyle((LtNwcTextRenderStyle)render_style);
+}
+
+void LcNwcTextStyleWrapper::SetFontStyle(int font_style)
+{
+	this->mTextStyle->SetFontStyle(font_style);
+}
+
+void LcNwcTextStyleWrapper::SetFontWeight(int font_weight)
+{
+	this->mTextStyle->SetFontWeight(font_weight);
+}
+
+LcNwcTextStyleWrapper::~LcNwcTextStyleWrapper()
+{
+	LiNwcTextStyleDestroy(*this->mTextStyle);
+}
 //-----------------------------------------------------------------------------------------------------------------------
 // LcNwcGeometryStreamWrapper
 //-----------------------------------------------------------------------------------------------------------------------
@@ -512,17 +565,17 @@ void LcNwcGeometryStreamWrapper::GenerateParametrics(bool enable)
 {
 	this->mGeometryStream->GenerateParametrics(enable);
 }
-/*
-int LcNwcGeometryStreamWrapper::BRepShell(LtNwcShell shell)
+
+int LcNwcGeometryStreamWrapper::BRepShell(const LcNwcShellWrapper& shell)
 {
-	return this->mGeometryStream->BRepShell(shell);
+	return this->mGeometryStream->BRepShell(*shell.mShell);
 }
 
-int LcNwcGeometryStreamWrapper::BRepEntity(LtNwcBRepEntity entity)
+int LcNwcGeometryStreamWrapper::BRepEntity(const LcNwcBRepEntityWrapper& entity)
 {
-	return this->mGeometryStream->BRepEntity(entity);
+	return this->mGeometryStream->BRepEntity(*entity.mBRepEntity);
 }
-*/
+
 std::string LcNwcGeometryStreamWrapper::BRepFaceterName() const
 {
 	return std::string(this->mGeometryStream->BRepFaceterName());
@@ -533,12 +586,11 @@ int LcNwcGeometryStreamWrapper::BRepNumFailedFaces()
 	return this->mGeometryStream->BRepNumFailedFaces();
 }
 
-/*
-void LcNwcGeometryStreamWrapper::BeginText(LtNwcTextStyle style)
+void LcNwcGeometryStreamWrapper::BeginText(const LcNwcTextStyleWrapper& style)
 {
-	this->mGeometryStream->BeginText(style);
+	this->mGeometryStream->BeginText(*style.mTextStyle);
 }
-*/
+
 void LcNwcGeometryStreamWrapper::AddText(const std::wstring& text)
 {
 	this->mGeometryStream->AddText(text.c_str());
@@ -777,3 +829,4 @@ LcNwcTrimmedCurveWrapper::~LcNwcTrimmedCurveWrapper()
 {
 	
 }
+

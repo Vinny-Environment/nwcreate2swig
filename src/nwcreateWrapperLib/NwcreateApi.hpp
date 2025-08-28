@@ -1,6 +1,5 @@
 #pragma once
-
-//#define NWCREATE_SWIG_API __declspec(dllexport)
+#include "Headers.hpp"
 
 class LcNwcDataWrapper;
 class LcNwcGuidWrapper;
@@ -18,6 +17,7 @@ class LcNwcBinaryAttributeWrapper;
 
 class LcNwcGeometryWrapper;
 class LcNwcExternalGeometryWrapper;
+class LcNwcTextStyleWrapper;
 class LcNwcGeometryStreamWrapper;
 class LcNwcCurveWrapper;
 class LcNwcBezierCurveWrapper;
@@ -29,14 +29,19 @@ class LcNwcLineWrapper;
 class LcNwcParabolaWrapper;
 class LcNwcTrimmedCurveWrapper;
 
+class LcNwcSurfaceWrapper;
+
+class LcNwcBRepEntityWrapper;
+class LcNwcLoopWrapper;
+class LcNwcFaceWrapper;
+class LcNwcShellWrapper;
+
 class LcNwcNodeWrapper;
 class LcNwcGroupWrapper;
 
 class LcNwcSceneWrapper;
 
 
-
-#include "Headers.hpp"
 
 //-----------------------------------------------------------------------------------------------------------------------
 // Data types
@@ -79,7 +84,6 @@ private:
 	LcNwcGuid* mGuid;
 };
 
-
 //-----------------------------------------------------------------------------------------------------------------------
 // Attributes
 //-----------------------------------------------------------------------------------------------------------------------
@@ -112,6 +116,8 @@ public:
 	~LcNwcTransformWrapper();
 protected:
 	friend class LcNwcCurveWrapper;
+	friend class LcNwcSurfaceWrapper;
+	friend class LcNwcBRepEntityWrapper;
 	LcNwcTransformWrapper(LtNwcTransform handle);
 	
 private:
@@ -443,6 +449,158 @@ private:
 	LcNwcTrimmedCurve* mTrimmedCurve;
 };
 
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcSurface and it's inherits
+//-----------------------------------------------------------------------------------------------------------------------
+
+/**@brief A wrapper class around LcNwcSurfaceWrapper API
+*/
+class NWCREATE_SWIG_API LcNwcSurfaceWrapper
+{
+public:
+	LcNwcSurfaceWrapper(const LcNwcSurfaceWrapper& other);
+	LcNwcSurfaceWrapper Copy();
+	void SetUserData(int data);
+	void Evaluate(double u, double v, double pnt[3]);
+	void Transform(const LcNwcTransformWrapper& transform);
+	void Translate(double x, double y, double z);
+	void Translate(double v[3]);
+	~LcNwcSurfaceWrapper();
+protected:
+	friend class LcNwcFaceWrapper;
+	LcNwcSurfaceWrapper(LtNwcSurface handle);
+private:
+	LcNwcSurface* mSurface;
+};
+
+//TODO: LcNwcBezierSurface, LcNwcBSplineSurface, LcNwcConicalSurface, LcNwcCylindricalSurface, LcNwcExtrudedSurface, LcNwcOffsetSurface, LcNwcPlane, LcNwcRectangularTrimmedSurface, LcNwcRevolvedSurface, LcNwcSphericalSurface, LcNwcToroidalSurface 
+
+//-----------------------------------------------------------------------------------------------------------------------
+// BRep and it's inherits
+//----------------------------------------------------------------------------------------------------------------------- 
+
+enum LtNwcLoopTypeWrapper {
+	LI_NWC_LOOP_AUTO_Wrap,
+	LI_NWC_LOOP_BOUNDARY_Wrap,
+	LI_NWC_LOOP_HOLE_Wrap,
+};
+
+enum LtNwcBRepEntityTypeWrapper {
+	LI_NWC_BREP_UNKNOWN_Wrap,
+	LI_NWC_BREP_COMPOUND_Wrap,
+	LI_NWC_BREP_COMPSOLID_Wrap,
+	LI_NWC_BREP_BODY_Wrap,
+	LI_NWC_BREP_SOLID_Wrap,
+	LI_NWC_BREP_SHELL_Wrap,
+	LI_NWC_BREP_FACE_Wrap,
+	LI_NWC_BREP_LOOP_Wrap,
+	LI_NWC_BREP_COEDGE_Wrap,
+	LI_NWC_BREP_EDGE_Wrap,
+	LI_NWC_BREP_VERTEX_Wrap
+};
+
+/**@brief A wrapper class around LcNwcBRepEntity  API
+*/
+class NWCREATE_SWIG_API LcNwcBRepEntityWrapper
+{
+public:
+	LcNwcBRepEntityWrapper(const LcNwcBRepEntityWrapper& other);
+	LtNwcBRepEntityTypeWrapper GetType() const;
+	void SetUserData(int data);
+	LcNwcBRepEntityWrapper Copy();
+	void Transform(const LcNwcTransformWrapper& transform);
+	void Translate(double x, double y, double z);
+	void Translate(double v[3]);
+	~LcNwcBRepEntityWrapper();
+protected:
+	friend class LcNwcGeometryStreamWrapper;
+	LcNwcBRepEntityWrapper(LtNwcBRepEntity handle);
+private:
+	LcNwcBRepEntity* mBRepEntity;
+};
+
+//TODO: LcNwcBody, LcNwcBRepBox, LcNwcBRepCylinder, LcNwcBRepDifference, LcNwcBRepHalfSpace, LcNwcBRepIntersection, LcNwcBRepPrism, LcNwcBRepRevolve, LcNwcBRepUnion, LcNwcCoedge, LcNwcCompound, LcNwcEdge, LcNwcFace (+), LcNwcLoop (+/-), LcNwcShell (+/-), LcNwcSolid, LcNwcVertex 
+
+/**@brief A wrapper class around LcNwcLoop API
+*/
+class NWCREATE_SWIG_API LcNwcLoopWrapper : public LcNwcBRepEntityWrapper
+{
+public:
+	LcNwcLoopWrapper();
+	//LcNwcLoopWrapper(LcNwcBRepProfileBuilder& builder);
+	//void AddCoedge(LtNwcCoedge coedge);
+	void SetType(LtNwcLoopTypeWrapper type);
+	~LcNwcLoopWrapper();
+protected:
+	friend class LcNwcFaceWrapper;
+	LcNwcLoopWrapper(LtNwcLoop handle);
+private:
+	LcNwcLoop* mLoop;
+};
+
+enum LtNwcSenseWrapper
+{
+	LI_NWC_SENSE_NEGATIVE_Wrap = -1,
+	LI_NWC_SENSE_POSITIVE_Wrap = +1,
+};
+
+
+/**@brief A wrapper class around LcNwcFace API
+*/
+class NWCREATE_SWIG_API LcNwcFaceWrapper : public LcNwcBRepEntityWrapper
+{
+public:
+	LcNwcFaceWrapper(const LcNwcSurfaceWrapper& surface, LtNwcSenseWrapper sense);
+	void AddLoop(const LcNwcLoopWrapper& loop);
+	~LcNwcFaceWrapper();
+protected:
+	friend class LcNwcShellWrapper;
+	LcNwcFaceWrapper(LtNwcFace handle);
+private:
+	LcNwcFace* mFace;
+};
+
+/**@brief A wrapper class around LcNwcShell API
+*/
+class NWCREATE_SWIG_API LcNwcShellWrapper : public LcNwcBRepEntityWrapper
+{
+public:
+	LcNwcShellWrapper();
+	~LcNwcShellWrapper();
+	void AddFace(const LcNwcFaceWrapper& face);
+protected:
+	friend class LcNwcGeometryStreamWrapper;
+	LcNwcShellWrapper(LtNwcShell handle);
+private:
+	LcNwcShell* mShell;
+};
+
+enum LtNwcTextRenderStyleWrapper {
+	LI_NWC_TEXT_RENDER_FILLED_Wrap,  
+	LI_NWC_TEXT_RENDER_OUTLINE_Wrap, 
+};
+
+/**@brief A wrapper class around LcNwcTextStyle API
+*/
+class NWCREATE_SWIG_API LcNwcTextStyleWrapper
+{
+public:
+	LcNwcTextStyleWrapper(const std::wstring& typeface);
+	LcNwcTextStyleWrapper(const LcNwcTextStyleWrapper& other);
+	void SetTypeface(const std::wstring& typeface);
+	void SetFontHeight(double height);
+	void SetPointSize(int point_size);
+	void SetRenderStyle(LtNwcTextRenderStyleWrapper render_style);
+	void SetFontStyle(int font_style);
+	void SetFontWeight(int font_weight);
+	~LcNwcTextStyleWrapper();
+protected:
+	friend class LcNwcGeometryStreamWrapper;
+	LcNwcTextStyleWrapper(LtNwcTextStyle handle);
+private:
+	LcNwcTextStyle* mTextStyle;
+};
+
 enum LtNwcShapeFlagsWrapper
 {
 	eTWO_SIDED_Wrap = 0x02,
@@ -533,17 +691,17 @@ public:
 	void Point(const double p[3]);
 	void SnapPoint(double x, double y, double z);
 	void SnapPoint(const double p[3]);
-	void Curve(const LcNwcCurveWrapper& curve); //TODO Make Wrapper
-	void CurveSegment(const LcNwcCurveWrapper& curve, double start, double end); //TODO Make Wrapper
+	void Curve(const LcNwcCurveWrapper& curve);
+	void CurveSegment(const LcNwcCurveWrapper& curve, double start, double end);
 	void FacetEnd();
 	void End();
 	void CoordTolerance(double tolerance);
 	void GenerateParametrics(bool enable);
-	//int BRepShell(LtNwcShell shell); //TODO Make Wrapper
-	//int BRepEntity(LtNwcBRepEntity entity); //TODO Make Wrapper
+	int BRepShell(const LcNwcShellWrapper& shell); 
+	int BRepEntity(const LcNwcBRepEntityWrapper& entity);
 	std::string BRepFaceterName() const;
 	int BRepNumFailedFaces();
-	//void BeginText(LtNwcTextStyle style); //TODO Make Wrapper
+	void BeginText(const LcNwcTextStyleWrapper& style);
 	void AddText(const std::wstring& text);
 	void EndText();
 	~LcNwcGeometryStreamWrapper();
@@ -553,6 +711,7 @@ protected:
 private:
 	LcNwcGeometryStream* mGeometryStream;
 };
+
 /**@brief A wrapper class around LcNwcGeometry API
 */
 class NWCREATE_SWIG_API LcNwcGeometryWrapper : public LcNwcNodeWrapper
@@ -569,7 +728,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------------------------------------------------
-// LcNwcSceneWrapper
+// LcNwcSceneWrapper, Viewes and etc
 //-----------------------------------------------------------------------------------------------------------------------
 
 /**@brief A wrapper class around LcNwcScene API

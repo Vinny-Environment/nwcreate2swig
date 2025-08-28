@@ -16,6 +16,7 @@
 //#define CLASS_DECLSPEC
 
 // Forward declarations
+
 class LcNwcDataWrapper;
 class LcNwcGuidWrapper;
 
@@ -32,6 +33,7 @@ class LcNwcBinaryAttributeWrapper;
 
 class LcNwcGeometryWrapper;
 class LcNwcExternalGeometryWrapper;
+class LcNwcTextStyleWrapper;
 class LcNwcGeometryStreamWrapper;
 class LcNwcCurveWrapper;
 class LcNwcBezierCurveWrapper;
@@ -40,7 +42,15 @@ class LcNwcCircleWrapper;
 class LcNwcEllipseWrapper;
 class LcNwcHyperbolaWrapper;
 class LcNwcLineWrapper;
+class LcNwcParabolaWrapper;
 class LcNwcTrimmedCurveWrapper;
+
+class LcNwcSurfaceWrapper;
+
+class LcNwcBRepEntityWrapper;
+class LcNwcLoopWrapper;
+class LcNwcFaceWrapper;
+class LcNwcShellWrapper;
 
 class LcNwcNodeWrapper;
 class LcNwcGroupWrapper;
@@ -347,11 +357,130 @@ protected:
 	LcNwcTrimmedCurveWrapper(LtNwcTrimmedCurve handle);
 };
 
+// Surfaces
+%rename(LcNwcSurfaceWrapper) LcNwcSurfaceWrapper;
+class LcNwcSurfaceWrapper 
+{
+public:
+	LcNwcSurfaceWrapper(const LcNwcSurfaceWrapper& other);
+	LcNwcSurfaceWrapper Copy();
+	void SetUserData(int data);
+	void Evaluate(double u, double v, double pnt[3]);
+	void Transform(const LcNwcTransformWrapper& transform);
+	void Translate(double x, double y, double z);
+	void Translate(double v[3]);
+	~LcNwcSurfaceWrapper();
+protected:
+	LcNwcSurfaceWrapper(LtNwcSurface handle);
+};
+
+// BRep
+
+enum LtNwcLoopTypeWrapper {
+	LI_NWC_LOOP_AUTO_Wrap,
+	LI_NWC_LOOP_BOUNDARY_Wrap,
+	LI_NWC_LOOP_HOLE_Wrap,
+};
+
+enum LtNwcBRepEntityTypeWrapper {
+	LI_NWC_BREP_UNKNOWN_Wrap,
+	LI_NWC_BREP_COMPOUND_Wrap,
+	LI_NWC_BREP_COMPSOLID_Wrap,
+	LI_NWC_BREP_BODY_Wrap,
+	LI_NWC_BREP_SOLID_Wrap,
+	LI_NWC_BREP_SHELL_Wrap,
+	LI_NWC_BREP_FACE_Wrap,
+	LI_NWC_BREP_LOOP_Wrap,
+	LI_NWC_BREP_COEDGE_Wrap,
+	LI_NWC_BREP_EDGE_Wrap,
+	LI_NWC_BREP_VERTEX_Wrap
+};
+
+%rename(LcNwcBRepEntityWrapper) LcNwcBRepEntityWrapper;
+class LcNwcBRepEntityWrapper 
+{
+public:
+	LcNwcBRepEntityWrapper(const LcNwcBRepEntityWrapper& other);
+	LtNwcBRepEntityTypeWrapper GetType() const;
+	void SetUserData(int data);
+	LcNwcBRepEntityWrapper Copy();
+	void Transform(const LcNwcTransformWrapper& transform);
+	void Translate(double x, double y, double z);
+	void Translate(double v[3]);
+	~LcNwcBRepEntityWrapper();
+protected:
+	LcNwcBRepEntityWrapper(LtNwcBRepEntity handle);
+};
+
+%rename(LcNwcLoopWrapper) LcNwcLoopWrapper;
+class LcNwcLoopWrapper : public LcNwcBRepEntityWrapper
+{
+public:
+	LcNwcLoopWrapper();
+	//LcNwcLoopWrapper(LcNwcBRepProfileBuilder& builder);
+	//void AddCoedge(LtNwcCoedge coedge);
+	void SetType(LtNwcLoopTypeWrapper type);
+	~LcNwcLoopWrapper();
+protected:
+	LcNwcLoopWrapper(LtNwcLoop handle);
+};
+
+enum LtNwcSenseWrapper
+{
+	LI_NWC_SENSE_NEGATIVE_Wrap = -1,
+	LI_NWC_SENSE_POSITIVE_Wrap = +1,
+};
+
+%rename(LcNwcFaceWrapper) LcNwcFaceWrapper;
+class LcNwcFaceWrapper : public LcNwcBRepEntityWrapper
+{
+public:
+	LcNwcFaceWrapper(const LcNwcSurfaceWrapper& surface, LtNwcSenseWrapper sense);
+	void AddLoop(const LcNwcLoopWrapper& loop);
+	~LcNwcFaceWrapper();
+protected:
+	LcNwcFaceWrapper(LtNwcFace handle);
+};
+
+%rename(LcNwcShellWrapper) LcNwcShellWrapper;
+class LcNwcShellWrapper : public LcNwcBRepEntityWrapper
+{
+public:
+	LcNwcShellWrapper();
+	~LcNwcShellWrapper();
+	void AddFace(const LcNwcFaceWrapper& face);
+protected:
+	LcNwcShellWrapper(LtNwcShell handle);
+};
+
+enum LtNwcTextRenderStyleWrapper {
+	LI_NWC_TEXT_RENDER_FILLED_Wrap,  
+	LI_NWC_TEXT_RENDER_OUTLINE_Wrap, 
+};
+
+%rename(LcNwcTextStyleWrapper) LcNwcTextStyleWrapper;
+class LcNwcTextStyleWrapper
+{
+public:
+	LcNwcTextStyleWrapper(const std::wstring& typeface);
+	LcNwcTextStyleWrapper(const LcNwcTextStyleWrapper& other);
+	void SetTypeface(const std::wstring& typeface);
+	void SetFontHeight(double height);
+	void SetPointSize(int point_size);
+	void SetRenderStyle(LtNwcTextRenderStyleWrapper render_style);
+	void SetFontStyle(int font_style);
+	void SetFontWeight(int font_weight);
+	~LcNwcTextStyleWrapper();
+protected:
+	friend class LcNwcGeometryStreamWrapper;
+	LcNwcTextStyleWrapper(LtNwcTextStyle handle);
+};
+
 enum LtNwcShapeFlagsWrapper
 {
-	eTWO_SIDED = 0x02,
-	eNORMALIZE = 0x04, 
-	eREVERSED = 0x10, 
+	eTWO_SIDED_Wrap = 0x02,
+	eNORMALIZE_Wrap = 0x04, 
+	eREVERSED_Wrap = 0x10, 
 };
 
 %rename(LcNwcGeometryStreamWrapper) LcNwcGeometryStreamWrapper;
@@ -436,17 +565,17 @@ public:
 	void Point(const double p[3]);
 	void SnapPoint(double x, double y, double z);
 	void SnapPoint(const double p[3]);
-	void Curve(const LcNwcCurveWrapper& curve); //TODO Make Wrapper
-	void CurveSegment(const LcNwcCurveWrapper& curve, double start, double end); //TODO Make Wrapper
+	void Curve(const LcNwcCurveWrapper& curve);
+	void CurveSegment(const LcNwcCurveWrapper& curve, double start, double end);
 	void FacetEnd();
 	void End();
 	void CoordTolerance(double tolerance);
 	void GenerateParametrics(bool enable);
-	//int BRepShell(LtNwcShell shell); //TODO Make Wrapper
-	//int BRepEntity(LtNwcBRepEntity entity); //TODO Make Wrapper
+	int BRepShell(const LcNwcShellWrapper& shell); 
+	int BRepEntity(const LcNwcBRepEntityWrapper& entity);
 	std::string BRepFaceterName() const;
 	int BRepNumFailedFaces();
-	//void BeginText(LtNwcTextStyle style); //TODO Make Wrapper
+	void BeginText(const LcNwcTextStyleWrapper& style);
 	void AddText(const std::wstring& text);
 	void EndText();
 	~LcNwcGeometryStreamWrapper();
@@ -514,35 +643,42 @@ public:
 }
 
 // Handle the friend relationships by making protected members accessible
-%ignore LcNwcDataWrapper::mData;
-%ignore LcNwcGuidWrapper::mGuid;
+%ignore LcNwcDataWrapper::mDataWrapper;
+%ignore LcNwcGuidWrapper::mGuidWrapper;
 
-%ignore LcNwcAttributeWrapper::mAttribute;
-%ignore LcNwcTransform::mTransform;
-%ignore LcNwcMaterialWrapper::mMaterial;
-%ignore LcNwcSemanticPriorityWrapper::mSemanticPriority;
-%ignore LcNwcTextAttributeWrapper::mTextAttribute;
-%ignore LcNwcNameAttributeWrapper::mNameAttribute;
-%ignore LcNwcNat64AttributeWrapper::mNat64Attribute;
-%ignore LcNwcPropertyAttributeWrapper::mPropertyAttribute;
-%ignore LcNwcURLAttributeWrapper::mURLAttribute;
-%ignore LcNwcBinaryAttributeWrapper::mBinaryAttribute;
+%ignore LcNwcAttributeWrapper::mAttributeWrapper;
+%ignore LcNwcTransformWrapper::mTransformWrapper;
+%ignore LcNwcMaterialWrapper::mMaterialWrapper;
+%ignore LcNwcSemanticPriorityWrapper::mSemanticPriorityWrapper;
+%ignore LcNwcTextAttributeWrapper::mTextAttributeWrapper;
+%ignore LcNwcNameAttributeWrapper::mNameAttributeWrapper;
+%ignore LcNwcNat64AttributeWrapper::mNat64AttributeWrapper;
+%ignore LcNwcPropertyAttributeWrapper::mPropertyAttributeWrapper;
+%ignore LcNwcURLAttributeWrapper::mURLAttributeWrapper;
+%ignore LcNwcBinaryAttributeWrapper::mBinaryAttributeWrapper;
 
-%ignore LcNwcNodeWrapper::mNode;
-%ignore LcNwcGroupWrapper::mGroup;
-%ignore LcNwcExternalGeometryWrapper::mExternalGeometry;
+%ignore LcNwcGeometryWrapper::mGeometryWrapper;
+%ignore LcNwcExternalGeometryWrapper::mExternalGeometryWrapper;
+%ignore LcNwcTextStyleWrapper::mTextStyleWrapper;
+%ignore LcNwcGeometryStreamWrapper::mGeometryStreamWrapper;
+%ignore LcNwcCurveWrapper::mCurveWrapper;
+%ignore LcNwcBezierCurveWrapper::mBezierCurveWrapper;
+%ignore LcNwcBSplineCurveWrapper::mBSplineCurveWrapper;
+%ignore LcNwcCircleWrapper::mCircleWrapper;
+%ignore LcNwcEllipseWrapper::mEllipseWrapper;
+%ignore LcNwcHyperbolaWrapper::mHyperbolaWrapper;
+%ignore LcNwcLineWrapper::mLineWrapper;
+%ignore LcNwcParabolaWrapper::mParabolaWrapper;
+%ignore LcNwcTrimmedCurveWrapper::mTrimmedCurveWrapper;
 
-%ignore LcNwcCurveWrapper::mCurve;
-%ignore LcNwcBezierCurveWrapper::mBezierCurve;
-%ignore LcNwcBSplineCurveWrapper::mBSplineCurve;
-%ignore LcNwcCircleWrapper::mCircle;
-%ignore LcNwcEllipseWrapper::mEllipse;
-%ignore LcNwcHyperbolaWrapper::mHyperbola;
-%ignore LcNwcLineWrapper::mLine;
-%ignore LcNwcParabolaWrapper::mParabola;
-%ignore LcNwcTrimmedCurveWrapper::mTrimmedCurve;
+%ignore LcNwcSurfaceWrapper::mSurfaceWrapper;
 
-%ignore LcNwcGeometryStreamWrapper::mGeometryStream;
-%ignore LcNwcGeometryWrapper::mGeometry;
+%ignore LcNwcBRepEntityWrapper::mBRepEntityWrapper;
+%ignore LcNwcLoopWrapper::mLoopWrapper;
+%ignore LcNwcFaceWrapper::mFaceWrapper;
+%ignore LcNwcShellWrapper::mShellWrapper;
 
-%ignore LcNwcSceneWrapper::mScene;
+%ignore LcNwcNodeWrapper::mNodeWrapper;
+%ignore LcNwcGroupWrapper::mGroupWrapper;
+
+%ignore LcNwcSceneWrapper::mSceneWrapper;

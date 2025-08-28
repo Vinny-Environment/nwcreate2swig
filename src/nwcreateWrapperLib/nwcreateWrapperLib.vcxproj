@@ -107,10 +107,12 @@ xcopy "$(NWCREATE_LIB)\bin\x64\*.*" "$(SolutionDir)..\VinnyLibBin\$(Configuratio
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LcNwcAttributeWrapper.cpp" />
+    <ClCompile Include="LcNwcBRepWrappers.cpp" />
     <ClCompile Include="LcNwcDataWrapper.cpp" />
     <ClCompile Include="LcNwcGeometryWrapper.cpp" />
     <ClCompile Include="LcNwcNodeWrapper.cpp" />
     <ClCompile Include="LcNwcSceneWrapper.cpp" />
+    <ClCompile Include="LcNwcSurfaceWrappers.cpp" />
     <ClCompile Include="nwcreateApi_wrap.cxx" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
