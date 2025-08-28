@@ -127,14 +127,18 @@ protected:
 	LcNwcNameAttributeWrapper(const LtNwcNameAttribute& handle);
 };
 
+enum LtNwcNat64AttributeFormatWrapper {
+	LI_NWC_NAT64_FORMAT_DECIMAL_Wrap,
+	LI_NWC_NAT64_FORMAT_HEXADECIMAL_Wrap,
+};
+
 %rename(LcNwcNat64AttributeWrapper) LcNwcNat64AttributeWrapper;
 class LcNwcNat64AttributeWrapper : public LcNwcAttributeWrapper {
 public:
 	LcNwcNat64AttributeWrapper();
 	void SetStableId(bool b);
 	void SetValue(double value);
-	void DisplayValueAsDecimal();
-	void DisplayValueAsHexaDecimal();
+	void SetDisplayFormat(LtNwcNat64AttributeFormatWrapper format);
 	~LcNwcNat64AttributeWrapper();
 protected:
 	LcNwcNat64AttributeWrapper(const LtNwcNat64Attribute& handle);
@@ -162,6 +166,18 @@ public:
 protected:
 	LcNwcURLAttributeWrapper(const LtNwcURLAttribute& handle);
 };
+
+%rename(LcNwcBinaryAttributeWrapper) LcNwcBinaryAttributeWrapper;
+class LcNwcBinaryAttributeWrapper : public LcNwcAttributeWrapper {
+public:
+	LcNwcBinaryAttributeWrapper();
+	void SetValue(const unsigned char*& data, int length);
+	~LcNwcBinaryAttributeWrapper();
+protected:
+	LcNwcBinaryAttributeWrapper(const LtNwcBinaryAttribute& handle);
+};
+
+// LcNwcNode, LcNwcGroup, LcNwcGeometry, LcNwcGeometryStream
 
 %rename(LcNwcNodeWrapper) LcNwcNodeWrapper;
 class LcNwcNodeWrapper {
@@ -191,6 +207,128 @@ public:
     ~LcNwcGroupWrapper();
 };
 
+enum LtNwcShapeFlagsWrapper
+{
+	eTWO_SIDED = 0x02,
+	eNORMALIZE = 0x04, 
+	eREVERSED = 0x10, 
+};
+
+%rename(LcNwcGeometryStreamWrapper) LcNwcGeometryStreamWrapper;
+class LcNwcGeometryStreamWrapper
+{
+public:
+	void CreaseAngle(double angle);
+	void MakeSolidsSingleSided(bool enable);
+	void PriorityScale(double scale);
+	void ShapeFlags(LtNwcShapeFlagsWrapper flags);
+	void SplitThreshold(int t);
+	void SpatialSplitThreshold(int t);
+	void MergeThreshold(int t);
+	void RecenterThreshold(double dist);
+	void FacetingFactor(double factor);
+	void MaxFacetDeviation(double tol);
+	void ExteriorFaceting(bool b);
+	void CorrectGenNormalOrientation(bool enable);
+	void CorrectVertexNormalOrientation(bool enable);
+	void IndexedVertexAliases(bool enable);
+	void PushTransform();
+	void SetTransformIdentity();
+	void SetTransformTranslation(double x, double y, double z);
+	void SetTransformTranslation(const double v[3]);
+	void SetTransform(double matrix[16]);
+	void MultTransformTranslation(double x, double y, double z);
+	void MultTransformTranslation(const double v[3]);
+	void MultTransform(double matrix[16]);
+	void PopTransform();
+	void ExternalGeometry(LtNwcExternalGeometry geometry); //TODO Wrapper
+	void Begin(unsigned int vertex_properties);
+	void Color(double r, double g, double b, double a);
+	void Normal(double x, double y, double z);
+	void Normal(const double v[3]);
+	void TexCoord(double x, double y);
+	int IndexedVertex(double x, double y, double z);
+	int IndexedVertex(const double p[3]);
+	void TriangleVertex(double x, double y, double z);
+	void TriangleVertex(const double p[3]);
+	void TriangleIndex(int index);
+	void TriStripVertex(double x, double y, double z);
+	void TriStripVertex(const double p[3]);
+	void TriStripIndex(int index);
+	void TriFanVertex(double x, double y, double z);
+	void TriFanVertex(const double p[3]);
+	void TriFanIndex(int index);
+	void ConvexPolyVertex(double x, double y, double z);
+	void ConvexPolyVertex(const double p[3]);
+	void ConvexPolyIndex(int index);
+	void SeqEnd();
+	void BeginPolygon();
+	void BeginPolygonContour();
+	void PolygonVertex(double x, double y, double z);
+	void PolygonVertex(const double p[3]);
+	void PolygonIndex(int index);
+	void PolygonEllipse(double center[3], double major[3], double minor[3], double start_ang = 0, double end_ang = 0);
+	void EndPolygonContour();
+	void EndPolygon();
+	void FacetRadius(double radius);
+	int GetNumCirclePts(double radius);
+	void Circle(double center[3], double normal[3], double radius);
+	void Circle3Point(double pt1[3], double pt2[3], double pt3[3]);
+	void Ellipse(double center[3], double major[3], double minor[3], double start_ang = 0, double end_ang = 0);
+	void EllipseCurve(double center[3], double major[3], double minor[3], double start_ang = 0, double end_ang = 0);
+	void Cylinder(double pt1[3], double pt2[3], double radius);
+	void Conic(double pt1[3], double major1[3], double minor1[3], double pt2[3], double major2[3], double minor2[3], double start_ang = 0, double end_ang = 0);
+	void Cuboid(double pt1[3], double pt2[3]);
+	void Sphere(double pt[3], double radius);
+	void EllipsoidSection(double center[3], double x_axis[3], double y_axis[3], double z_axis[3], double latitude_min, double latitude_max, double longitude_min, double longitude_max);
+	void Ellipsoid(double center[3], double x_axis[3], double y_axis[3], double z_axis[3]);
+	void TorusSection(double center[3], double x_axis[3], double y_axis[3], double major_radius, double minor_radius, double phi_min, double phi_max, double longitude_min, double longitude_max);
+	void Torus(double center[3], double x_axis[3], double y_axis[3], double major_radius, double minor_radius);
+	LtInt32 IndexedLineVertex(double x, double y, double z);
+	LtInt32 IndexedLineVertex(const double p[3]);
+	void LineVertex(double x, double y, double z);
+	void LineVertex(const double p[3]);
+	void LineIndex(int index);
+	void LineStripVertex(double x, double y, double z);
+	void LineStripVertex(const double p[3]);
+	void LineStripIndex(int index);
+	void Point(double x, double y, double z);
+	void Point(const double p[3]);
+	void SnapPoint(double x, double y, double z);
+	void SnapPoint(const double p[3]);
+	//void Curve(LtNwcCurve curve); //TODO Make Wrapper
+	//void CurveSegment(LtNwcCurve curve, double start, double end); //TODO Make Wrapper
+	void FacetEnd();
+	void End();
+	void CoordTolerance(double tolerance);
+	void GenerateParametrics(bool enable);
+	//int BRepShell(LtNwcShell shell); //TODO Make Wrapper
+	//int BRepEntity(LtNwcBRepEntity entity); //TODO Make Wrapper
+	std::string BRepFaceterName() const;
+	int BRepNumFailedFaces();
+	//void BeginText(LtNwcTextStyle style); //TODO Make Wrapper
+	void AddText(const std::wstring& text);
+	void EndText();
+	~LcNwcGeometryStreamWrapper();
+protected:
+	friend class LcNwcGeometryWrapper;
+	LcNwcGeometryStreamWrapper(const LtNwcGeometryStream& stream);
+};
+
+%rename(LcNwcGeometryWrapper) LcNwcGeometryWrapper;
+class LcNwcGeometryWrapper : public LcNwcNodeWrapper
+{
+public:
+	LcNwcGeometryWrapper();
+	LcNwcGeometryStreamWrapper OpenStream();
+	void CloseStream(const LcNwcGeometryStreamWrapper& stream);
+	~LcNwcGeometryWrapper();
+protected:
+	LcNwcGeometryWrapper(const LtNwcGeometry& handle);
+};
+
+
+// LcNwcScene
 %rename(LcNwcSceneWrapper) LcNwcSceneWrapper;
 class LcNwcSceneWrapper {
 public:
@@ -253,4 +391,7 @@ public:
 
 %ignore LcNwcNodeWrapper::mNode;
 %ignore LcNwcGroupWrapper::mGroup;
+%ignore LcNwcGeometryStreamWrapper::mGeometryStream;
+%ignore LcNwcGeometryWrapper::mGeometry;
+
 %ignore LcNwcSceneWrapper::mScene;

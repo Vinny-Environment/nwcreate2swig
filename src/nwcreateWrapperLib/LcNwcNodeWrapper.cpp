@@ -65,8 +65,7 @@ LcNwcNodeWrapper::~LcNwcNodeWrapper()
 //-----------------------------------------------------------------------------------------------------------------------
 // LcNwcGroupWrapper
 //-----------------------------------------------------------------------------------------------------------------------
-LcNwcGroupWrapper::LcNwcGroupWrapper() : 
-	LcNwcNodeWrapper(*(this->mGroup = new LcNwcGroup()))
+LcNwcGroupWrapper::LcNwcGroupWrapper() : LcNwcNodeWrapper(*(this->mGroup = new LcNwcGroup()))
 {
 
 }
@@ -76,7 +75,6 @@ LcNwcGroupWrapper::LcNwcGroupWrapper(const LtNwcGroup& handle) : LcNwcNodeWrappe
 {
 
 }
-
 
 void LcNwcGroupWrapper::SetInsert(bool b)
 {

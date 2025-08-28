@@ -102,6 +102,7 @@ xcopy "$(NWCREATE_LIB)\bin\x64\*.*" "$(SolutionDir)..\VinnyLibBin\$(Configuratio
   <ItemGroup>
     <ClCompile Include="LcNwcAttributeWrapper.cpp" />
     <ClCompile Include="LcNwcDataWrapper.cpp" />
+    <ClCompile Include="LcNwcGeometryWrapper.cpp" />
     <ClCompile Include="LcNwcNodeWrapper.cpp" />
     <ClCompile Include="LcNwcSceneWrapper.cpp" />
     <ClCompile Include="nwcreateApi_wrap.cxx" />

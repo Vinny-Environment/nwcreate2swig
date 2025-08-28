@@ -202,14 +202,9 @@ void LcNwcNat64AttributeWrapper::SetValue(double value)
 	this->mNat64Attribute->SetValue(value);
 }
 
-void LcNwcNat64AttributeWrapper::DisplayValueAsDecimal()
+void LcNwcNat64AttributeWrapper::SetDisplayFormat(LtNwcNat64AttributeFormatWrapper format)
 {
-	this->mNat64Attribute->SetDisplayFormat(LtNwcNat64AttributeFormat::LI_NWC_NAT64_FORMAT_DECIMAL);
-}
-
-void LcNwcNat64AttributeWrapper::DisplayValueAsHexaDecimal()
-{
-	this->mNat64Attribute->SetDisplayFormat(LtNwcNat64AttributeFormat::LI_NWC_NAT64_FORMAT_HEXADECIMAL);
+	this->mNat64Attribute->SetDisplayFormat((LtNwcNat64AttributeFormat)format);
 }
 
 LcNwcNat64AttributeWrapper::~LcNwcNat64AttributeWrapper()

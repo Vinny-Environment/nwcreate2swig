@@ -47,6 +47,9 @@
     <ClCompile Include="LcNwcSceneWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LcNwcGeometryWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="nwcreateApi.i">
