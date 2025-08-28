@@ -64,6 +64,9 @@
 xcopy "$(NWCREATE_LIB)\bin\x64\*.*" "$(SolutionDir)..\VinnyLibBin\$(Configuration)\dependencies\nwcreate" /Y /I /E
 </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>del $(SolutionDir)src\nwcreateNET\*.cs</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -92,6 +95,9 @@ xcopy "$(NWCREATE_LIB)\bin\x64\*.*" "$(SolutionDir)..\VinnyLibBin\$(Configuratio
 xcopy "$(NWCREATE_LIB)\bin\x64\*.*" "$(SolutionDir)..\VinnyLibBin\$(Configuration)\dependencies\nwcreate" /Y /I /E
 </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>del $(SolutionDir)src\nwcreateNET\*.cs</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />

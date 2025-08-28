@@ -71,7 +71,7 @@ LcNwcGroupWrapper::LcNwcGroupWrapper() : LcNwcNodeWrapper(*(this->mGroup = new L
 }
 
 
-LcNwcGroupWrapper::LcNwcGroupWrapper(const LtNwcGroup& handle) : LcNwcNodeWrapper(*(this->mGroup = new LcNwcGroup(handle)))
+LcNwcGroupWrapper::LcNwcGroupWrapper(LtNwcGroup handle) : LcNwcNodeWrapper(*(this->mGroup = new LcNwcGroup(handle)))
 {
 
 }

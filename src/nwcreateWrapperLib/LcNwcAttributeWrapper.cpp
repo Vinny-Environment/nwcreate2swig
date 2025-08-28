@@ -4,7 +4,7 @@
 // LcNwcAttributeWrapper
 //-----------------------------------------------------------------------------------------------------------------------
 
-LcNwcAttributeWrapper::LcNwcAttributeWrapper(const LtNwcAttribute& handle)
+LcNwcAttributeWrapper::LcNwcAttributeWrapper(LtNwcAttribute handle)
 {
 	mAttribute = new LcNwcAttribute(handle);
 }
@@ -52,7 +52,7 @@ LcNwcTransformWrapper::LcNwcTransformWrapper(double matrix[16], bool reverses) :
 
 }
 
-LcNwcTransformWrapper::LcNwcTransformWrapper(const LtNwcTransform& handle) : LcNwcAttributeWrapper(*(this->mTransform = new LcNwcTransform(handle)))
+LcNwcTransformWrapper::LcNwcTransformWrapper(LtNwcTransform handle) : LcNwcAttributeWrapper(*(this->mTransform = new LcNwcTransform(handle)))
 {
 
 }
@@ -70,7 +70,7 @@ LcNwcMaterialWrapper::LcNwcMaterialWrapper() : LcNwcAttributeWrapper(*(this->mMa
 
 }
 
-LcNwcMaterialWrapper::LcNwcMaterialWrapper(const LtNwcMaterial& handle) : LcNwcAttributeWrapper(*(this->mMaterial = new LcNwcMaterial(handle)))
+LcNwcMaterialWrapper::LcNwcMaterialWrapper(LtNwcMaterial handle) : LcNwcAttributeWrapper(*(this->mMaterial = new LcNwcMaterial(handle)))
 {
 
 }
@@ -118,7 +118,7 @@ LcNwcSemanticPriorityWrapper::LcNwcSemanticPriorityWrapper() : LcNwcAttributeWra
 
 }
 
-LcNwcSemanticPriorityWrapper::LcNwcSemanticPriorityWrapper(const LtNwcSemanticPriority& handle) : LcNwcAttributeWrapper(*(this->mSemanticPriority = new LcNwcSemanticPriority(handle)))
+LcNwcSemanticPriorityWrapper::LcNwcSemanticPriorityWrapper(LtNwcSemanticPriority handle) : LcNwcAttributeWrapper(*(this->mSemanticPriority = new LcNwcSemanticPriority(handle)))
 {
 
 }
@@ -141,7 +141,7 @@ LcNwcTextAttributeWrapper::LcNwcTextAttributeWrapper() : LcNwcAttributeWrapper(*
 
 }
 
-LcNwcTextAttributeWrapper::LcNwcTextAttributeWrapper(const LtNwcTextAttribute& handle) : LcNwcAttributeWrapper(*(this->mTextAttribute = new LcNwcTextAttribute(handle)))
+LcNwcTextAttributeWrapper::LcNwcTextAttributeWrapper(LtNwcTextAttribute handle) : LcNwcAttributeWrapper(*(this->mTextAttribute = new LcNwcTextAttribute(handle)))
 {
 
 }
@@ -164,7 +164,7 @@ LcNwcNameAttributeWrapper::LcNwcNameAttributeWrapper() : LcNwcAttributeWrapper(*
 
 }
 
-LcNwcNameAttributeWrapper::LcNwcNameAttributeWrapper(const LtNwcNameAttribute& handle) : LcNwcAttributeWrapper(*(this->mNameAttribute = new LcNwcNameAttribute(handle)))
+LcNwcNameAttributeWrapper::LcNwcNameAttributeWrapper(LtNwcNameAttribute handle) : LcNwcAttributeWrapper(*(this->mNameAttribute = new LcNwcNameAttribute(handle)))
 {
 
 }
@@ -187,7 +187,7 @@ LcNwcNat64AttributeWrapper::LcNwcNat64AttributeWrapper() : LcNwcAttributeWrapper
 
 }
 
-LcNwcNat64AttributeWrapper::LcNwcNat64AttributeWrapper(const LtNwcNat64Attribute& handle) : LcNwcAttributeWrapper(*(this->mNat64Attribute = new LcNwcNat64Attribute(handle)))
+LcNwcNat64AttributeWrapper::LcNwcNat64AttributeWrapper(LtNwcNat64Attribute handle) : LcNwcAttributeWrapper(*(this->mNat64Attribute = new LcNwcNat64Attribute(handle)))
 {
 
 }
@@ -220,7 +220,7 @@ LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper() : LcNwcAttributeW
 
 }
 
-LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper(const LtNwcPropertyAttribute& handle) : LcNwcAttributeWrapper(*(this->mPropertyAttribute = new LcNwcPropertyAttribute(handle)))
+LcNwcPropertyAttributeWrapper::LcNwcPropertyAttributeWrapper(LtNwcPropertyAttribute handle) : LcNwcAttributeWrapper(*(this->mPropertyAttribute = new LcNwcPropertyAttribute(handle)))
 {
 
 }
@@ -248,7 +248,7 @@ LcNwcURLAttributeWrapper::LcNwcURLAttributeWrapper() : LcNwcAttributeWrapper(*(t
 
 }
 
-LcNwcURLAttributeWrapper::LcNwcURLAttributeWrapper(const LtNwcURLAttribute& handle) : LcNwcAttributeWrapper(*(this->mURLAttribute = new LcNwcURLAttribute(handle)))
+LcNwcURLAttributeWrapper::LcNwcURLAttributeWrapper(LtNwcURLAttribute handle) : LcNwcAttributeWrapper(*(this->mURLAttribute = new LcNwcURLAttribute(handle)))
 {
 
 }
@@ -281,7 +281,7 @@ LcNwcBinaryAttributeWrapper::LcNwcBinaryAttributeWrapper() : LcNwcAttributeWrapp
 
 }
 
-LcNwcBinaryAttributeWrapper::LcNwcBinaryAttributeWrapper(const LtNwcBinaryAttribute& handle) : LcNwcAttributeWrapper(*(this->mBinaryAttribute = new LcNwcBinaryAttribute(handle)))
+LcNwcBinaryAttributeWrapper::LcNwcBinaryAttributeWrapper(LtNwcBinaryAttribute handle) : LcNwcAttributeWrapper(*(this->mBinaryAttribute = new LcNwcBinaryAttribute(handle)))
 {
 
 }

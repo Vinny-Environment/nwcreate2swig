@@ -2,6 +2,7 @@
 
 //system
 #include "string"
+#include "vector"
 
 //nwcreate
 #include "nwcreate/LiNwcAll.h"

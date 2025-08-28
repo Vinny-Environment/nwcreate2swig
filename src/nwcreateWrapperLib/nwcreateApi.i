@@ -22,14 +22,29 @@ class LcNwcGuidWrapper;
 class LcNwcAttributeWrapper;
 class LcNwcTransformWrapper;
 class LcNwcMaterialWrapper;
+class LcNwcSemanticPriorityWrapper;
 class LcNwcTextAttributeWrapper;
 class LcNwcNameAttributeWrapper;
+class LcNwcNat64AttributeWrapper;
 class LcNwcPropertyAttributeWrapper;
 class LcNwcURLAttributeWrapper;
 class LcNwcBinaryAttributeWrapper;
 
+class LcNwcGeometryWrapper;
+class LcNwcExternalGeometryWrapper;
+class LcNwcGeometryStreamWrapper;
+class LcNwcCurveWrapper;
+class LcNwcBezierCurveWrapper;
+class LcNwcBSplineCurveWrapper;
+class LcNwcCircleWrapper;
+class LcNwcEllipseWrapper;
+class LcNwcHyperbolaWrapper;
+class LcNwcLineWrapper;
+class LcNwcTrimmedCurveWrapper;
+
 class LcNwcNodeWrapper;
 class LcNwcGroupWrapper;
+
 class LcNwcSceneWrapper;
 
 %rename(LcNwcDataWrapper) LcNwcDataWrapper;
@@ -59,6 +74,8 @@ public:
 	~LcNwcGuidWrapper();
 };
 
+// Attributes 
+
 %rename(LcNwcAttributeWrapper) LcNwcAttributeWrapper;
 class LcNwcAttributeWrapper {
 public:
@@ -67,7 +84,7 @@ public:
     void SetInternal(bool value);
     ~LcNwcAttributeWrapper();
 protected:
-    LcNwcAttributeWrapper(const LtNwcAttribute& handle);
+    LcNwcAttributeWrapper(LtNwcAttribute handle);
 	LcNwcAttributeWrapper(const LcNwcAttribute& other);
 };
 
@@ -79,7 +96,7 @@ public:
 	LcNwcTransformWrapper(double matrix[16], bool reverses);
     ~LcNwcTransformWrapper();
 protected:
-	LcNwcTransformWrapper(const LtNwcTransform& handle);
+	LcNwcTransformWrapper(LtNwcTransform handle);
 };
 
 %rename(LcNwcMaterialWrapper) LcNwcMaterialWrapper;
@@ -94,7 +111,7 @@ public:
 	void SetTransparency(double t);
     ~LcNwcMaterialWrapper();
 protected:
-	LcNwcMaterialWrapper(const LtNwcMaterial& handle);
+	LcNwcMaterialWrapper(LtNwcMaterial handle);
 };
 
 %rename(LcNwcSemanticPriorityWrapper) LcNwcSemanticPriorityWrapper;
@@ -104,7 +121,7 @@ public:
 	void SetPriority(double priority);
 	~LcNwcSemanticPriorityWrapper();
 protected:
-	LcNwcSemanticPriorityWrapper(const LtNwcSemanticPriority& handle);
+	LcNwcSemanticPriorityWrapper(LtNwcSemanticPriority handle);
 };
 
 %rename(LcNwcTextAttributeWrapper) LcNwcTextAttributeWrapper;
@@ -114,7 +131,7 @@ public:
 	void SetText(const std::wstring& text);
 	~LcNwcTextAttributeWrapper();
 protected:
-	LcNwcTextAttributeWrapper(const LtNwcTextAttribute& handle);
+	LcNwcTextAttributeWrapper(LtNwcTextAttribute handle);
 };
 
 %rename(LcNwcNameAttributeWrapper) LcNwcNameAttributeWrapper;
@@ -124,7 +141,7 @@ public:
 	void SetStableId(bool b);
 	~LcNwcNameAttributeWrapper();
 protected:
-	LcNwcNameAttributeWrapper(const LtNwcNameAttribute& handle);
+	LcNwcNameAttributeWrapper(LtNwcNameAttribute handle);
 };
 
 enum LtNwcNat64AttributeFormatWrapper {
@@ -141,7 +158,7 @@ public:
 	void SetDisplayFormat(LtNwcNat64AttributeFormatWrapper format);
 	~LcNwcNat64AttributeWrapper();
 protected:
-	LcNwcNat64AttributeWrapper(const LtNwcNat64Attribute& handle);
+	LcNwcNat64AttributeWrapper(LtNwcNat64Attribute handle);
 };
 
 %rename(LcNwcPropertyAttributeWrapper) LcNwcPropertyAttributeWrapper;
@@ -152,7 +169,7 @@ public:
     int Size() const;
     ~LcNwcPropertyAttributeWrapper();
 protected:
-	LcNwcPropertyAttributeWrapper(const LtNwcPropertyAttribute& handle);
+	LcNwcPropertyAttributeWrapper(LtNwcPropertyAttribute handle);
 };
 
 %rename(LcNwcURLAttributeWrapper) LcNwcURLAttributeWrapper;
@@ -164,7 +181,7 @@ public:
 	void AddAttachmentPoint(double x, double y, double z);
 	~LcNwcURLAttributeWrapper();
 protected:
-	LcNwcURLAttributeWrapper(const LtNwcURLAttribute& handle);
+	LcNwcURLAttributeWrapper(LtNwcURLAttribute handle);
 };
 
 %rename(LcNwcBinaryAttributeWrapper) LcNwcBinaryAttributeWrapper;
@@ -174,7 +191,7 @@ public:
 	void SetValue(const unsigned char*& data, int length);
 	~LcNwcBinaryAttributeWrapper();
 protected:
-	LcNwcBinaryAttributeWrapper(const LtNwcBinaryAttribute& handle);
+	LcNwcBinaryAttributeWrapper(LtNwcBinaryAttribute handle);
 };
 
 // LcNwcNode, LcNwcGroup, LcNwcGeometry, LcNwcGeometryStream
@@ -183,6 +200,7 @@ protected:
 class LcNwcNodeWrapper {
 public:
     void SetName(const std::wstring& name);
+	void SetGuid(const LcNwcGuidWrapper& guid);
     void SetClassName(const std::wstring& user_name, const std::string& internal_name);
     void SetHidden(bool b);
     void SetRequired(bool b);
@@ -205,6 +223,128 @@ public:
     void SetCollection(bool b);
     void AddNode(const LcNwcNodeWrapper& node);
     ~LcNwcGroupWrapper();
+protected:
+	LcNwcGroupWrapper(LtNwcGroup handle);
+};
+
+
+%rename(LcNwcExternalGeometryWrapper) LcNwcExternalGeometryWrapper;
+class LcNwcExternalGeometryWrapper {
+public:
+	LcNwcExternalGeometryWrapper();
+	void SetFileLoader(const std::string& file_loader);
+	void SetLinkName(const std::string& link_name);
+	void SetUri(const std::wstring& uri);
+	void SetUserData(void* user_data);
+	void SetVertexProperties(unsigned int vertex_properties);
+	void SetBoundingBox(double min_point[3], double max_point[3]);
+	void SetNumPrimitives(unsigned int num_primitives);
+	void SetPrimitiveTypes(unsigned int primitive_types);
+	~LcNwcExternalGeometryWrapper();
+protected:
+	LcNwcExternalGeometryWrapper(LtNwcExternalGeometry handle);
+};
+
+%rename(LcNwcCurveWrapper) LcNwcCurveWrapper;
+class LcNwcCurveWrapper {
+public:
+	LcNwcCurveWrapper Copy();
+	void SetUserData(int data);
+	void Evaluate(double t, double pnt[3]);
+	void Reverse();
+	void Transform(LcNwcTransformWrapper transform);
+	void Translate(double x, double y, double z);
+	void Translate(double v[3]);
+	double GetFirstParameter(bool* is_infinite = NULL);
+	double GetLastParameter(bool* is_infinite = NULL);
+	~LcNwcCurveWrapper();
+protected:
+	LcNwcCurveWrapper(const LcNwcCurve& other);
+	LcNwcCurveWrapper(LtNwcCurve handle);
+};
+
+%rename(LcNwcBezierCurveWrapper) LcNwcBezierCurveWrapper;
+class LcNwcBezierCurveWrapper : public LcNwcCurveWrapper
+{
+public:
+	LcNwcBezierCurveWrapper(int num_poles, double poles[][3]);
+	LcNwcBezierCurveWrapper(int num_poles, double poles[][3], double weights[]);
+	~LcNwcBezierCurveWrapper();
+protected:
+	LcNwcBezierCurveWrapper(LtNwcBezierCurve handle);
+};
+
+%rename(LcNwcBSplineCurveWrapper) LcNwcBSplineCurveWrapper;
+class LcNwcBSplineCurveWrapper : public LcNwcCurveWrapper
+{
+public:
+	LcNwcBSplineCurveWrapper(int num_poles, double poles[][3], int num_knots, double knots[], int mults[], int degree, bool periodic = false);
+	LcNwcBSplineCurveWrapper(int num_poles, double poles[][3], double weights[], int num_knots, double knots[], int mults[], bool periodic = false);
+	~LcNwcBSplineCurveWrapper();
+protected:
+	LcNwcBSplineCurveWrapper(LtNwcBSplineCurve handle);
+};
+
+%rename(LcNwcCircleWrapper) LcNwcCircleWrapper;
+class LcNwcCircleWrapper : public LcNwcCurveWrapper
+{
+public:
+	LcNwcCircleWrapper(double pnt[3], double xaxis[3], double yaxis[3], double radius);
+	~LcNwcCircleWrapper();
+protected:
+	LcNwcCircleWrapper(LtNwcCircle handle);
+};
+
+%rename(LcNwcEllipseWrapper) LcNwcEllipseWrapper;
+class LcNwcEllipseWrapper : public LcNwcCurveWrapper
+{
+public:
+	LcNwcEllipseWrapper(double pnt[3], double xaxis[3], double yaxis[3], double major_radius, double minor_radius);
+	~LcNwcEllipseWrapper();
+protected:
+	LcNwcEllipseWrapper(LtNwcEllipse handle);
+};
+
+%rename(LcNwcHyperbolaWrapper) LcNwcHyperbolaWrapper;
+class LcNwcHyperbolaWrapper : public LcNwcCurveWrapper
+{
+public:
+	LcNwcHyperbolaWrapper(double pnt[3], double xaxis[3], double yaxis[3], double major_radius, double minor_radius);
+	~LcNwcHyperbolaWrapper();
+protected:
+	LcNwcHyperbolaWrapper(LtNwcHyperbola handle);
+};
+
+%rename(LcNwcLineWrapper) LcNwcLineWrapper;
+class LcNwcLineWrapper : public LcNwcCurveWrapper
+{
+public:
+	LcNwcLineWrapper(double pnt[3], double dir[3]);
+	~LcNwcLineWrapper();
+protected:
+	LcNwcLineWrapper(LtNwcLine handle);
+};
+
+%rename(LcNwcParabolaWrapper) LcNwcParabolaWrapper;
+class LcNwcParabolaWrapper : public LcNwcCurveWrapper
+{
+public:
+	LcNwcParabolaWrapper(double pnt[3], double xaxis[3], double yaxis[3], double focal_length);
+	~LcNwcParabolaWrapper();
+protected:
+	LcNwcParabolaWrapper(LtNwcParabola handle);
+};
+
+
+%rename(LcNwcTrimmedCurveWrapper) LcNwcTrimmedCurveWrapper;
+class LcNwcTrimmedCurveWrapper : public LcNwcCurveWrapper
+{
+public:
+	LcNwcTrimmedCurveWrapper(LcNwcCurveWrapper basis_curve, double param0, double param1, bool sense = true);
+	LcNwcTrimmedCurveWrapper(LcNwcCurveWrapper basis_curve, double pnt0[3], double pnt1[3], bool sense = true);
+	~LcNwcTrimmedCurveWrapper();
+protected:
+	LcNwcTrimmedCurveWrapper(LtNwcTrimmedCurve handle);
 };
 
 enum LtNwcShapeFlagsWrapper
@@ -241,7 +381,7 @@ public:
 	void MultTransformTranslation(const double v[3]);
 	void MultTransform(double matrix[16]);
 	void PopTransform();
-	void ExternalGeometry(LtNwcExternalGeometry geometry); //TODO Wrapper
+	void ExternalGeometry(const LcNwcExternalGeometryWrapper& geometry);
 	void Begin(unsigned int vertex_properties);
 	void Color(double r, double g, double b, double a);
 	void Normal(double x, double y, double z);
@@ -296,8 +436,8 @@ public:
 	void Point(const double p[3]);
 	void SnapPoint(double x, double y, double z);
 	void SnapPoint(const double p[3]);
-	//void Curve(LtNwcCurve curve); //TODO Make Wrapper
-	//void CurveSegment(LtNwcCurve curve, double start, double end); //TODO Make Wrapper
+	void Curve(const LcNwcCurveWrapper& curve); //TODO Make Wrapper
+	void CurveSegment(const LcNwcCurveWrapper& curve, double start, double end); //TODO Make Wrapper
 	void FacetEnd();
 	void End();
 	void CoordTolerance(double tolerance);
@@ -311,8 +451,7 @@ public:
 	void EndText();
 	~LcNwcGeometryStreamWrapper();
 protected:
-	friend class LcNwcGeometryWrapper;
-	LcNwcGeometryStreamWrapper(const LtNwcGeometryStream& stream);
+	LcNwcGeometryStreamWrapper(LtNwcGeometryStream stream);
 };
 
 %rename(LcNwcGeometryWrapper) LcNwcGeometryWrapper;
@@ -324,7 +463,7 @@ public:
 	void CloseStream(const LcNwcGeometryStreamWrapper& stream);
 	~LcNwcGeometryWrapper();
 protected:
-	LcNwcGeometryWrapper(const LtNwcGeometry& handle);
+	LcNwcGeometryWrapper(LtNwcGeometry handle);
 };
 
 
@@ -391,6 +530,18 @@ public:
 
 %ignore LcNwcNodeWrapper::mNode;
 %ignore LcNwcGroupWrapper::mGroup;
+%ignore LcNwcExternalGeometryWrapper::mExternalGeometry;
+
+%ignore LcNwcCurveWrapper::mCurve;
+%ignore LcNwcBezierCurveWrapper::mBezierCurve;
+%ignore LcNwcBSplineCurveWrapper::mBSplineCurve;
+%ignore LcNwcCircleWrapper::mCircle;
+%ignore LcNwcEllipseWrapper::mEllipse;
+%ignore LcNwcHyperbolaWrapper::mHyperbola;
+%ignore LcNwcLineWrapper::mLine;
+%ignore LcNwcParabolaWrapper::mParabola;
+%ignore LcNwcTrimmedCurveWrapper::mTrimmedCurve;
+
 %ignore LcNwcGeometryStreamWrapper::mGeometryStream;
 %ignore LcNwcGeometryWrapper::mGeometry;
 

@@ -8,7 +8,7 @@ LcNwcGeometryWrapper::LcNwcGeometryWrapper() : LcNwcNodeWrapper(*(this->mGeometr
 
 }
 
-LcNwcGeometryWrapper::LcNwcGeometryWrapper(const LtNwcGeometry& handle) : LcNwcNodeWrapper(*(this->mGeometry = new LcNwcGeometry(handle)))
+LcNwcGeometryWrapper::LcNwcGeometryWrapper(LtNwcGeometry handle) : LcNwcNodeWrapper(*(this->mGeometry = new LcNwcGeometry(handle)))
 {
 
 }
@@ -29,9 +29,66 @@ LcNwcGeometryWrapper::~LcNwcGeometryWrapper()
 }
 
 //-----------------------------------------------------------------------------------------------------------------------
+// LcNwcExternalGeometryWrapper
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcExternalGeometryWrapper::LcNwcExternalGeometryWrapper()
+{
+	this->mExternalGeometry = new LcNwcExternalGeometry();
+}
+
+LcNwcExternalGeometryWrapper::LcNwcExternalGeometryWrapper(LtNwcExternalGeometry handle)
+{
+	this->mExternalGeometry = new LcNwcExternalGeometry(handle);
+}
+
+void LcNwcExternalGeometryWrapper::SetFileLoader(const std::string& file_loader)
+{
+	this->mExternalGeometry->SetFileLoader(file_loader.c_str());
+}
+
+void LcNwcExternalGeometryWrapper::SetLinkName(const std::string& link_name)
+{
+	this->mExternalGeometry->SetLinkName(link_name.c_str());
+}
+
+void LcNwcExternalGeometryWrapper::SetUri(const std::wstring& uri)
+{
+	this->mExternalGeometry->SetUri(uri.c_str());
+}
+
+void LcNwcExternalGeometryWrapper::SetUserData(void* user_data)
+{
+	this->mExternalGeometry->SetUserData(user_data);
+}
+
+void LcNwcExternalGeometryWrapper::SetVertexProperties(unsigned int vertex_properties)
+{
+	this->mExternalGeometry->SetVertexProperties(vertex_properties);
+}
+
+void LcNwcExternalGeometryWrapper::SetBoundingBox(double min_point[3], double max_point[3])
+{
+	this->mExternalGeometry->SetBoundingBox(min_point, max_point);
+}
+
+void LcNwcExternalGeometryWrapper::SetNumPrimitives(unsigned int num_primitives)
+{
+	this->mExternalGeometry->SetNumPrimitives(num_primitives);
+}
+
+void LcNwcExternalGeometryWrapper::SetPrimitiveTypes(unsigned int primitive_types)
+{
+	this->mExternalGeometry->SetPrimitiveTypes(primitive_types);
+}
+
+LcNwcExternalGeometryWrapper::~LcNwcExternalGeometryWrapper()
+{
+	LiNwcExternalGeometryDestroy(*this->mExternalGeometry);
+}
+//-----------------------------------------------------------------------------------------------------------------------
 // LcNwcGeometryStreamWrapper
 //-----------------------------------------------------------------------------------------------------------------------
-LcNwcGeometryStreamWrapper::LcNwcGeometryStreamWrapper(const LtNwcGeometryStream& stream)
+LcNwcGeometryStreamWrapper::LcNwcGeometryStreamWrapper(LtNwcGeometryStream stream)
 {
 	this->mGeometryStream = new LcNwcGeometryStream(stream);
 }
@@ -151,9 +208,9 @@ void LcNwcGeometryStreamWrapper::PopTransform()
 	this->mGeometryStream->PopTransform();
 }
 
-void LcNwcGeometryStreamWrapper::ExternalGeometry(LtNwcExternalGeometry geometry) //TODO Wrapper
+void LcNwcGeometryStreamWrapper::ExternalGeometry(const LcNwcExternalGeometryWrapper& geometry)
 {
-	this->mGeometryStream->ExternalGeometry(geometry);
+	this->mGeometryStream->ExternalGeometry(*geometry.mExternalGeometry);
 }
 
 void LcNwcGeometryStreamWrapper::Begin(unsigned int vertex_properties)
@@ -425,17 +482,17 @@ void LcNwcGeometryStreamWrapper::SnapPoint(const double p[3])
 {
 	this->mGeometryStream->SnapPoint(p[0], p[1], p[2]);
 }
-/*
-void LcNwcGeometryStreamWrapper::Curve(LtNwcCurve curve)
+
+void LcNwcGeometryStreamWrapper::Curve(const LcNwcCurveWrapper& curve)
 {
-	this->mGeometryStream->Curve(curve);
+	this->mGeometryStream->Curve(*curve.mCurve);
 }
 
-void LcNwcGeometryStreamWrapper::CurveSegment(LtNwcCurve curve, double start, double end)
+void LcNwcGeometryStreamWrapper::CurveSegment(const LcNwcCurveWrapper& curve, double start, double end)
 {
-	this->mGeometryStream->CurveSegment(curve, start, end);
+	this->mGeometryStream->CurveSegment(*curve.mCurve, start, end);
 }
-*/
+
 void LcNwcGeometryStreamWrapper::FacetEnd()
 {
 	this->mGeometryStream-> FacetEnd();
@@ -496,4 +553,227 @@ void LcNwcGeometryStreamWrapper::EndText()
 LcNwcGeometryStreamWrapper::~LcNwcGeometryStreamWrapper()
 {
 	//destroy method exists??
+}
+
+//LcNwcCurveWrapper and all other inherits
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcCurveWrapper 
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcCurveWrapper::LcNwcCurveWrapper(const LcNwcCurve& other)
+{
+	this->mCurve = new LcNwcCurve(other);
+}
+
+LcNwcCurveWrapper::LcNwcCurveWrapper(LtNwcCurve handle)
+{
+	this->mCurve = new LcNwcCurve(handle);
+}
+
+LcNwcCurveWrapper LcNwcCurveWrapper::Copy()
+{
+	return LcNwcCurveWrapper(this->mCurve->Copy());
+}
+
+void LcNwcCurveWrapper::SetUserData(int data)
+{
+	this->mCurve->SetUserData(data);
+}
+
+void LcNwcCurveWrapper::Evaluate(double t, double pnt[3])
+{
+	this->mCurve->Evaluate(t, pnt);
+}
+
+void LcNwcCurveWrapper::Reverse()
+{
+	this->mCurve->Reverse();
+}
+
+void LcNwcCurveWrapper::Transform(LcNwcTransformWrapper transform)
+{
+	this->mCurve->Transform(*transform.mTransform);
+}
+
+void LcNwcCurveWrapper::Translate(double x, double y, double z)
+{
+	this->mCurve->Translate(x, y, z);
+}
+
+void LcNwcCurveWrapper::Translate(double v[3])
+{
+	this->mCurve->Translate(v[0], v[1], v[2]);
+}
+
+double LcNwcCurveWrapper::GetFirstParameter(bool* is_infinite)
+{
+	return this->mCurve->GetFirstParameter(is_infinite);
+}
+
+double LcNwcCurveWrapper::GetLastParameter(bool* is_infinite)
+{
+	return this->mCurve->GetLastParameter(is_infinite);
+}
+
+LcNwcCurveWrapper::~LcNwcCurveWrapper()
+{
+	LiNwcCurveDestroy(*this->mCurve);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcBezierCurveWrapper 
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcBezierCurveWrapper::LcNwcBezierCurveWrapper(int num_poles, double poles[][3]) : LcNwcCurveWrapper(*(mBezierCurve = new LcNwcBezierCurve(num_poles, poles)))
+{
+
+}
+
+LcNwcBezierCurveWrapper::LcNwcBezierCurveWrapper(int num_poles, double poles[][3], double weights[]) : LcNwcCurveWrapper(*(mBezierCurve = new LcNwcBezierCurve(num_poles, poles, weights)))
+{
+
+}
+
+LcNwcBezierCurveWrapper::LcNwcBezierCurveWrapper(LtNwcBezierCurve handle) : LcNwcCurveWrapper(*(mBezierCurve = new LcNwcBezierCurve(handle)))
+{
+
+}
+
+LcNwcBezierCurveWrapper::~LcNwcBezierCurveWrapper()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcBSplineCurveWrapper 
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcBSplineCurveWrapper::LcNwcBSplineCurveWrapper(int num_poles, double poles[][3], int num_knots, double knots[], int mults[], int degree, bool periodic) : LcNwcCurveWrapper(*(mBSplineCurve = new LcNwcBSplineCurve(num_poles, poles, num_knots, knots, mults, degree, periodic)))
+{
+
+}
+
+LcNwcBSplineCurveWrapper::LcNwcBSplineCurveWrapper(int num_poles, double poles[][3], double weights[], int num_knots, double knots[], int mults[], bool periodic) : LcNwcCurveWrapper(*(mBSplineCurve = new LcNwcBSplineCurve(num_poles, poles, weights, num_knots, knots, mults, periodic)))
+{
+
+}
+
+LcNwcBSplineCurveWrapper::LcNwcBSplineCurveWrapper(LtNwcBSplineCurve handle) : LcNwcCurveWrapper(*(mBSplineCurve = new LcNwcBSplineCurve(handle)))
+{
+
+}
+
+LcNwcBSplineCurveWrapper::~LcNwcBSplineCurveWrapper()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcCircleWrapper 
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcCircleWrapper::LcNwcCircleWrapper(double pnt[3], double xaxis[3], double yaxis[3], double radius) : LcNwcCurveWrapper(*(this->mCircle = new LcNwcCircle(pnt, xaxis, yaxis, radius)))
+{
+
+}
+
+LcNwcCircleWrapper::LcNwcCircleWrapper(LtNwcCircle handle) : LcNwcCurveWrapper(*(this->mCircle = new LcNwcCircle(handle)))
+{
+
+}
+
+LcNwcCircleWrapper::~LcNwcCircleWrapper()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcEllipseWrapper 
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcEllipseWrapper::LcNwcEllipseWrapper(double pnt[3], double xaxis[3], double yaxis[3], double major_radius, double minor_radius) : LcNwcCurveWrapper(*(this->mEllipse = new LcNwcEllipse(pnt, xaxis, yaxis, major_radius, minor_radius)))
+{
+
+}
+
+LcNwcEllipseWrapper::LcNwcEllipseWrapper(LtNwcEllipse handle) : LcNwcCurveWrapper(*(this->mEllipse = new LcNwcEllipse(handle)))
+{
+
+}
+
+LcNwcEllipseWrapper::~LcNwcEllipseWrapper()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcHyperbolaWrapper 
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcHyperbolaWrapper::LcNwcHyperbolaWrapper(double pnt[3], double xaxis[3], double yaxis[3], double major_radius, double minor_radius) : LcNwcCurveWrapper(*(this->mHyperbola = new LcNwcHyperbola(pnt, xaxis, yaxis, major_radius, minor_radius)))
+{
+
+}
+
+LcNwcHyperbolaWrapper::LcNwcHyperbolaWrapper(LtNwcHyperbola handle) : LcNwcCurveWrapper(*(this->mHyperbola = new LcNwcHyperbola(handle)))
+{
+
+}
+
+LcNwcHyperbolaWrapper::~LcNwcHyperbolaWrapper()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcLineWrapper 
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcLineWrapper::LcNwcLineWrapper(double pnt[3], double dir[3]) : LcNwcCurveWrapper(*(this->mLine = new LcNwcLine(pnt, dir)))
+{
+
+}
+
+LcNwcLineWrapper::LcNwcLineWrapper(LtNwcLine handle) : LcNwcCurveWrapper(*(this->mLine = new LcNwcLine(handle)))
+{
+
+}
+
+LcNwcLineWrapper::~LcNwcLineWrapper()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcParabolaWrapper 
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcParabolaWrapper::LcNwcParabolaWrapper(double pnt[3], double xaxis[3], double yaxis[3], double focal_length) : LcNwcCurveWrapper(*(this->mParabola = new LcNwcParabola(pnt, xaxis, yaxis, focal_length)))
+{
+
+}
+
+LcNwcParabolaWrapper::LcNwcParabolaWrapper(LtNwcParabola handle) : LcNwcCurveWrapper(*(this->mParabola = new LcNwcParabola(handle)))
+{
+
+}
+
+LcNwcParabolaWrapper::~LcNwcParabolaWrapper()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+// LcNwcTrimmedCurveWrapper 
+//-----------------------------------------------------------------------------------------------------------------------
+LcNwcTrimmedCurveWrapper::LcNwcTrimmedCurveWrapper(LcNwcCurveWrapper basis_curve, double param0, double param1, bool sense) : LcNwcCurveWrapper(*(mTrimmedCurve = new LcNwcTrimmedCurve(*basis_curve.mCurve, param0, param1, sense)))
+{
+
+}
+
+LcNwcTrimmedCurveWrapper::LcNwcTrimmedCurveWrapper(LcNwcCurveWrapper basis_curve, double pnt0[3], double pnt1[3], bool sense) : LcNwcCurveWrapper(*(mTrimmedCurve = new LcNwcTrimmedCurve(*basis_curve.mCurve, pnt0, pnt1, sense)))
+{
+
+}
+
+LcNwcTrimmedCurveWrapper::LcNwcTrimmedCurveWrapper(LtNwcTrimmedCurve handle) : LcNwcCurveWrapper(*(mTrimmedCurve = new LcNwcTrimmedCurve(handle)))
+{
+
+}
+
+LcNwcTrimmedCurveWrapper::~LcNwcTrimmedCurveWrapper()
+{
+	
 }
