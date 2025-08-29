@@ -327,7 +327,7 @@ public:
 	void SetUserData(int data);
 	void Evaluate(double t, double pnt[3]);
 	void Reverse();
-	void Transform(LcNwcTransformWrapper transform);
+	void Transform(const LcNwcTransformWrapper& transform);
 	void Translate(double x, double y, double z);
 	void Translate(double v[3]);
 	double GetFirstParameter(bool* is_infinite = NULL);

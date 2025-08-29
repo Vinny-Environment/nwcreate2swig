@@ -178,7 +178,7 @@ protected:
 class LcNwcPropertyAttributeWrapper : public LcNwcAttributeWrapper {
 public:
     LcNwcPropertyAttributeWrapper();
-    void AddProperty(const std::wstring& user_name, const std::string& internal_name, LcNwcDataWrapper propertyInfo);
+    void AddProperty(const std::wstring& user_name, const std::string& internal_name, const LcNwcDataWrapper& propertyInfo);
     int Size() const;
     ~LcNwcPropertyAttributeWrapper();
 protected:
@@ -265,7 +265,7 @@ public:
 	void SetUserData(int data);
 	void Evaluate(double t, double pnt[3]);
 	void Reverse();
-	void Transform(LcNwcTransformWrapper transform);
+	void Transform(const LcNwcTransformWrapper& transform);
 	void Translate(double x, double y, double z);
 	void Translate(double v[3]);
 	double GetFirstParameter(bool* is_infinite = NULL);

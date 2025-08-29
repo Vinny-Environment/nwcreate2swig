@@ -641,7 +641,7 @@ void LcNwcCurveWrapper::Reverse()
 	this->mCurve->Reverse();
 }
 
-void LcNwcCurveWrapper::Transform(LcNwcTransformWrapper transform)
+void LcNwcCurveWrapper::Transform(const LcNwcTransformWrapper& transform)
 {
 	this->mCurve->Transform(*transform.mTransform);
 }
