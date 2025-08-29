@@ -197,7 +197,7 @@ class NWCREATE_SWIG_API LcNwcNat64AttributeWrapper : public LcNwcAttributeWrappe
 public:
 	LcNwcNat64AttributeWrapper();
 	void SetStableId(bool b);
-	void SetValue(double value);
+	void SetValue(unsigned long long value);
 	void SetDisplayFormat(LtNwcNat64AttributeFormatWrapper format);
 	~LcNwcNat64AttributeWrapper();
 protected:
@@ -505,7 +505,7 @@ class NWCREATE_SWIG_API LcNwcBRepEntityWrapper
 {
 public:
 	LcNwcBRepEntityWrapper(const LcNwcBRepEntityWrapper& other);
-	LtNwcBRepEntityTypeWrapper GetType() const;
+	LtNwcBRepEntityTypeWrapper GetBRepEntityType() const;
 	void SetUserData(int data);
 	LcNwcBRepEntityWrapper Copy();
 	void Transform(const LcNwcTransformWrapper& transform);

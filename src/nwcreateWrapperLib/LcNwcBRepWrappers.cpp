@@ -13,7 +13,7 @@ LcNwcBRepEntityWrapper::LcNwcBRepEntityWrapper(LtNwcBRepEntity handle)
 	this->mBRepEntity = new LcNwcBRepEntity(handle);
 }
 
-LtNwcBRepEntityTypeWrapper LcNwcBRepEntityWrapper::GetType() const
+LtNwcBRepEntityTypeWrapper LcNwcBRepEntityWrapper::GetBRepEntityType() const
 {
 	return (LtNwcBRepEntityTypeWrapper)this->mBRepEntity->GetType();
 }

@@ -164,7 +164,7 @@ class LcNwcNat64AttributeWrapper : public LcNwcAttributeWrapper {
 public:
 	LcNwcNat64AttributeWrapper();
 	void SetStableId(bool b);
-	void SetValue(double value);
+	void SetValue(unsigned long long value);
 	void SetDisplayFormat(LtNwcNat64AttributeFormatWrapper format);
 	~LcNwcNat64AttributeWrapper();
 protected:
@@ -401,7 +401,7 @@ class LcNwcBRepEntityWrapper
 {
 public:
 	LcNwcBRepEntityWrapper(const LcNwcBRepEntityWrapper& other);
-	LtNwcBRepEntityTypeWrapper GetType() const;
+	LtNwcBRepEntityTypeWrapper GetBRepEntityType() const;
 	void SetUserData(int data);
 	LcNwcBRepEntityWrapper Copy();
 	void Transform(const LcNwcTransformWrapper& transform);

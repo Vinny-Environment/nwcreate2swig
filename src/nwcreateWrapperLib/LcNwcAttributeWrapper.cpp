@@ -197,7 +197,7 @@ void LcNwcNat64AttributeWrapper::SetStableId(bool b)
 	this->mNat64Attribute->SetStableId(b);
 }
 
-void LcNwcNat64AttributeWrapper::SetValue(double value)
+void LcNwcNat64AttributeWrapper::SetValue(unsigned long long value)
 {
 	this->mNat64Attribute->SetValue(value);
 }
