@@ -1,3 +1,6 @@
+#ifndef NWCREATE_API_I
+#define NWCREATE_API_I
+
 %module nwcreateWrapperLib
 
 %{
@@ -682,3 +685,5 @@ public:
 %ignore LcNwcGroupWrapper::mGroupWrapper;
 
 %ignore LcNwcSceneWrapper::mSceneWrapper;
+
+#endif // NWCREATE_API_I

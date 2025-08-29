@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="SWIG">
+      <UniqueIdentifier>{62fe9558-95dd-4085-a1ca-f20e6d7180c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG_Generated">
+      <UniqueIdentifier>{573059e5-e28c-42b7-a282-f467f6f16b4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -35,9 +41,6 @@
     <ClCompile Include="LcNwcDataWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="nwcreateApi_wrap.cxx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LcNwcAttributeWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -56,10 +59,13 @@
     <ClCompile Include="LcNwcBRepWrappers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="nwcreateApi_wrap.cxx">
+      <Filter>SWIG_Generated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="nwcreateApi.i">
-      <Filter>Source Files</Filter>
+      <Filter>SWIG</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

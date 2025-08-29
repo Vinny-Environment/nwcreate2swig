@@ -5,6 +5,7 @@
   <PropertyGroup>
     <NWCREATE_LIB>D:\PROCESSING\SDK\navis_api_2025\nwcreate</NWCREATE_LIB>
 	<SWIG_LIB>D:\PROCESSING\SDK\swigwin-4.3.1</SWIG_LIB>
+	<SWIG_COMMAND>$(SWIG_LIB)\swig.exe -csharp -c++ -outdir $(SolutionDir)src\nwcreateNET $(ProjectDir)</SWIG_COMMAND>
   </PropertyGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
