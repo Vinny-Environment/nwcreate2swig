@@ -1,5 +1,8 @@
 # nwc2swig
+
 Partially SWIG-wrapper for Autodesk Navisworks NWC format (nwcreate lib). Focus on write-procedures (for create NWC-file).
+
+Updates look at [UPDATES.md](./UPDATES.md)
 
 ## Dev
 
@@ -19,5 +22,3 @@ ATTENTION!!!: when using `nwcreateNET`-library with other projects, which output
 ### Differences in names
 
 * LcNwcBRepEntity::GetType() -> LcNwcBRepEntityWrapper::GetBRepEntityType() (because in .NET the `GetType()` method will conflicted with system's method);
-
-

@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutDir>$(SolutionDir)..\VinnyLibBin\$(Configuration)\dependencies\nwcreate</OutDir>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <LangVersion>8.0</LangVersion>
+      <OutDir>$(SolutionDir)..\VinnyLibBin\$(Configuration)\dependencies\nwcreate</OutDir>
+      <TargetFramework>netstandard2.0</TargetFramework>
+      <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+      <LangVersion>8.0</LangVersion>
+      <Version>1.0.0</Version>
   </PropertyGroup>
 
 </Project>
