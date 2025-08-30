@@ -17,6 +17,8 @@ The wrappers only created for `LcNwc*` classes and `LtNwc` enums from native Aut
 
 The compulsory procedure `LiNwcApiInitialise()` is placed on `LcNwcSceneWrapper`-constructor.
 
+Because of SWIG's generate large-files (`.cxx`) and (`*.cs`) they are ignored in `.gitgnore`.
+
 ATTENTION!!!: when using `nwcreateNET`-library with other projects, which output-catalogue is different than with `nwcreateNET` wou will need to add the catalogue with `nwcreateNET.dll` to Environmental's PATH variable, otherwise you will getting an error `DllNotFoundException: Unable to load DLL 'nwcreateWrapperLib' or one of its dependencies:`
 
 ### Differences in names
