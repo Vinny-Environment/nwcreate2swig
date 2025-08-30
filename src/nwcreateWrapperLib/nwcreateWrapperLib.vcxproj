@@ -120,8 +120,8 @@ xcopy "$(NWCREATE_LIB)\bin\x64\*.*" "$(SolutionDir)..\VinnyLibBin\$(Configuratio
   <ItemGroup>
     <CustomBuild Include="nwcreateApi.i">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SWIG_COMMAND)nwcreateApi.i</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SWIG_COMMAND)nwcreateApi.i</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SWIG_COMMAND_BASE)nwcreateApi.i</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SWIG_COMMAND_BASE)nwcreateApi.i</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">nwcreateApi_wrap.cxx;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">nwcreateApi_wrap.cxx;%(Outputs)</Outputs>
     </CustomBuild>
