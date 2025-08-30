@@ -1,4 +1,4 @@
-# nwc2swig
+# nwcreate2swig
 
 Partially SWIG-wrapper for Autodesk Navisworks NWC format (nwcreate lib). Focus on write-procedures (for create NWC-file).
 
