@@ -100,7 +100,8 @@ xcopy "$(NWCREATE_LIB)\bin\x64\*.*" "$(SolutionDir)..\VinnyLibBin\$(Configuratio
 </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>del $(SolutionDir)src\nwcreateNET\*.cs</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
