@@ -4,6 +4,8 @@ Partially SWIG-wrapper for Autodesk Navisworks NWC format (nwcreate lib). Focus 
 
 Updates look at [UPDATES.md](./UPDATES.md)
 
+https://github.com/Vinny-Environment/nwcreate2swig
+
 ## Dev
 
 Solution `nwcreateWrapper` consists of two main projects: `nwcreateWrapperLib` and `nwcreateNET`:
